@@ -8,10 +8,10 @@ In order to bring advanced imaging capabilities to OpenMRS. We have developed an
 - The **backend** module connects OpenMRS with one or more **Orthanc DICOM servers**, handling DICOM uploads, image metadata, and imaging procedure worklists.
 - This integration does **not require a RIS system**, making it suitable for clinics and smaller facilities.
 
-Watch the video demonstration of the module for OpenMRS 2.x here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M
+Watch the video demonstration of the module for OpenMRS 2.x here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M)
 
 
-Watch the video demonstration of the module for OpenMRS 3.x here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M)
+Watch the video demonstration of the module for OpenMRS 3.x here: [![Watch the video]()](https://youtu.be/Z4MRPmkwHms)
 
 ![The worlist workflow](./src/assets/worklist_workflow.png)
 
@@ -50,7 +50,7 @@ URL.
 - DCMTK tools (findscu for DICOM worklist testing)
 - orthancworklist.py plugin (provided)
 
-You can check the installed Orthanc's plugin here:
+Check the list of installed plugins on Orthanc here:
 
 ![The worlist workflow](./src/assets/orthanc_installed_plugins.png)
 
