@@ -1,7 +1,8 @@
 # OpenMRS Patient Imaging Module (Orthanc Integration)
 
 ## Overview
-In order to improve the management of patient image data within OpenMRS, the open source electronic healthcare system, we have developed an integration between Orthanc PACS and OpenMRS. The **OpenMRS Imaging Module** is an integration solution for the front and backends, designed for managing medical imaging data and radiology workflows using OpenMRS and Orthanc PACS.
+In order to bring advanced imaging capabilities to OpenMRS. We have developed an integration with Orthanc Picture Archiving and Communication System (PACS). The OpenMRS OpenMRS ``Imaging`` module introduces a solution for managing medical imaging workflows, including DICOM uploads, visualisation, and worklist coordination, through both front-end and back-end components. By connecting OpenMRS with Orthanc, this module provides powerful imaging support without the need of the RIS.
+
 
 - The **frontend** provides a UI managing imaging requests and visualizating image data.
 - The **backend** module connects OpenMRS with one or more **Orthanc DICOM servers**, handling DICOM uploads, image metadata, and imaging procedure worklists.
