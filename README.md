@@ -11,7 +11,7 @@ In order to bring advanced imaging capabilities to OpenMRS. We have developed an
 Watch the video demonstration of the module for OpenMRS 2.x here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M
 
 
-Watch the video demonstration of the module here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M)
+Watch the video demonstration of the module for OpenMRS 3.x here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M)
 
 ![The worlist workflow](./src/assets/worklist_workflow.png)
 
