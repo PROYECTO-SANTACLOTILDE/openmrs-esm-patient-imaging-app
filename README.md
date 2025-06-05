@@ -10,16 +10,23 @@ In order to improve the management of patient image data within OpenMRS, the ope
 Watch the video demonstration of the module for OpenMRS 2.x here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M
 
 
-The openmrs-esm-patient-imaging-app is a frontend module for OpenMRS 3.x. Together with our 'imaging' backend module, it provides an interface for visualizing and managing medical image data and worklists for patient imaging procedures.
-
-
 Watch the video demonstration of the module here: [![Watch the video]()](https://youtu.be/no3WNaq4Q_M)
 
 ![The worlist workflow](./src/assets/worklist_workflow.png)
 
-This diagram illustrates the workflow of the worklist. A radiologist wants to view the worklist generated in OpenMRS via C-FIND Rest API
-URL. The Orthanc server forwards the request to OpenMRS. OpenMRS processes the request and returns the worklist in JSON format. The Orthanc plugin function ``Onworklsit`` reads the data and generates the worklist in DICOM format. The results can be viewed with the command like ``findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" 127.0.0.1 4242``. 
-When the radiologist performs the procedure, a new DICOM study is created and uploaded to the Orthanc server. The Orthanc plugin observes the new study using the OnChange function, notifies OpenMRS to update the worklist status and marks the associated procedure step as completed.
+This diagram illustrates the workflow of the worklist:
+- A radiologist wants to view the worklist generated in OpenMRS via C-FIND Rest API
+URL. 
+- The Orthanc server forwards the request to OpenMRS. 
+- OpenMRS processes the request and returns the worklist in JSON format. 
+- The Orthanc plugin function ``Onworklsit`` reads the data and generates the worklist in DICOM format. 
+- The results can be viewed with the command like 
+
+    ```bash
+    findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" 127.0.0.1 4242
+    ```
+- Once the radiologist performs the procedure, a new DICOM study is created and uploaded to the Orthanc server. 
+- The Orthanc plugin observes the new study using the OnChange function, notifies OpenMRS to update the worklist status and marks the associated procedure step as `completed`.
 
 
 ## Supported Versions
@@ -30,16 +37,26 @@ When the radiologist performs the procedure, a new DICOM study is created and up
 ## Prerequisites
 
 - OpenMRS backend (2.x or 3.x compatible)
-- Orthanc PACS server(s) (local/remove or in docker)
+- Orthanc PACS server(s) and plugins
+    - dicom-web
+    - ohif
+    - orthanc-explorer-2
+    - python
+    - stone-webviewer 
+    - web-viewer 
+    - worklist
+    - wsi
 - DCMTK tools (findscu for DICOM worklist testing)
-- Python installed on Orthanc host
 - orthancworklist.py plugin (provided)
+
+You can check the installed Orthanc's plugin here:
+
+![The worlist workflow](./src/assets/orthanc_installed_plugins.png)
 
 ## Installation
 
 1.  Orthanc installation: 
     - Download the Orthanc from here: https://orthanc.uclouvain.be/
-    - TODO here add how to install orthanc
 
 2. OpenMRS Backend Moudle Setup
 
@@ -80,14 +97,18 @@ When the radiologist performs the procedure, a new DICOM study is created and up
         To set up the 'openmrs-patient-imaging-app' in your OpenMRS 3 installation (if you’re unable to find the Frontend settings):
         - Copy the directory `dist` from the package 'openmrs-esm-patient-imaging-app' to the directory `your-openmrs3-server/frontend/`
         - Then rename the folder with correct name: `openmrs-esm-patient-imaging-app-1.0.1-pre.1`
-        - In the 'your-openmrs3-server/frontend/' folder find the file `importmap.json`'
-        - Add the the line: 
-            `@openmrs/esm-patient-imaging-app":"./openmrs-esm-patient-imaging-app-1.0.1-pre.1/openmrs-esm-patient-imaging-app.js`
+        - Navigate to the 'your-openmrs3-server/frontend/' directory and open the file `importmap.json`'
+        - Add the following entry:
+        
+            ```bash
+            @openmrs/esm-patient-imaging-app":"./openmrs-esm-patient-imaging-app-1.0.1-pre.1/openmrs-esm-patient-imaging-app.js
+            ```
+        - Navigate to the `your-openmrs3-server/frontend/` and open the `routes.registry.json`: 
+            - Add following entry:
 
-        - In the `your-openmrs3-server/frontend/` find the `routes.registry.json`: 
-            - Add following information:
-                `@openmrs/esm-patient-imaging-app`: `{ all the content in the file route.json of the package 'openmrs-esm-patient-imaging-app'}`
-
+            ```bash
+            @openmrs/esm-patient-imaging-app : all the content in the file route.json of the package 'openmrs-esm-patient-imaging-app'
+            ```
         Then restart OpenMRS server
 
 ## Configuration
@@ -111,11 +132,15 @@ Replace OPENMRSHOST and OPENMRSPORT by the address and port of your OpenMRS back
     - Save it in a directory that is accessible by the Orthanc servers, for example in `/etc/orthanc`. 
     - Then add the following line to the python plugin configuration file of Orthanc (typically the file `python.json` in `/etc/orthanc`):
 
-        `"PythonScript": "/etc/orthanc/orthancWorklist.py",`
+        ```bash
+        "PythonScript": "/etc/orthanc/orthancWorklist.py"
+        ```
 
     - Then restart the Orthanc server:
 
-        `sudo systemctl restart orthanc`
+        ```bash
+        sudo systemctl restart orthanc
+        ```
 
 3. Configure the connection to the Orthanc servers:
     You must provide connection settings (IP address, username, etc.) in order to allow OpenMRS to reach the Orthanc server(s). If the imaging module 
