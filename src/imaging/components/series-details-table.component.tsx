@@ -153,13 +153,8 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
               <Table aria-label="Series summary" className={styles.table} {...getTableProps()} />
               <TableHead>
                 <TableRow>
-                  {headers.map((header, index) => (
-                    <TableHeader
-                      {...getHeaderProps({
-                        header,
-                        isSortable: header.isSortable,
-                      })}
-                    >
+                  {headers.map((header) => (
+                    <TableHeader key={header.key} {...getHeaderProps({ header })}>
                       {header.header}
                     </TableHeader>
                   ))}
@@ -186,7 +181,7 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
                           <TableCell
                             className={styles.tableCell}
                             key={cell.id}
-                            style={cell.id === 4 ? { width: '15%' } : { width: '22%' }}
+                            style={cell.id === 'action' ? { width: '15%' } : { width: '22%' }}
                           >
                             {cell.value?.content ?? cell.value}
                           </TableCell>

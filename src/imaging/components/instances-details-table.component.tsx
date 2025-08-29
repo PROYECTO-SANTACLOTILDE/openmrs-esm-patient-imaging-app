@@ -88,7 +88,7 @@ const InstancesDetailsTable: React.FC<InstancesDetailsTableProps> = ({
                 kind="ghost"
                 align="left"
                 size={isTablet ? 'lg' : 'sm'}
-                label={t('instanceViewLocal', 'InstanceViewLocal')}
+                label={t('instanceViewLocal', 'Instance preview local')}
                 onClick={() => {
                   shouldOnClickBeCalled.current = false;
                   launchInstancePreviewDialog(instance.orthancInstanceUID, studyId, instance.imagePositionPatient);
@@ -156,13 +156,7 @@ const InstancesDetailsTable: React.FC<InstancesDetailsTableProps> = ({
             <TableHead>
               <TableRow>
                 {headers.map((header, index) => (
-                  <TableHeader
-                    {...getHeaderProps({
-                      header,
-                      isSortable: header.isSortable,
-                    })}
-                    style={index === 4 ? { width: '180px' } : {}}
-                  >
+                  <TableHeader {...getHeaderProps({ header })} style={index === 4 ? { width: '180px' } : {}}>
                     {header.header}
                   </TableHeader>
                 ))}

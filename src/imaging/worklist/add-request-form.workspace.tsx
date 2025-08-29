@@ -224,7 +224,7 @@ const AddNewRequestWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({
           </section>
         </Stack>
         <ButtonSet className={isTablet ? styles.tabletButtons : styles.desktopButtons}>
-          <Button className={styles.button} onClick={closeWorkspace} kind="secondary">
+          <Button className={styles.button} onClick={() => closeWorkspace()} kind="secondary">
             {t('discard', 'Discard')}
           </Button>
           <Button className={styles.button} kind="primary" disabled={isSubmitting} type="submit">

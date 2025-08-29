@@ -98,7 +98,7 @@ const AssignStudiesWorkspace: React.FC<AssignStudiesWorkspaceProps> = ({
                 <EmptyState displayText={displayText} headerTitle={headerTitle} />
               )}
               <ButtonSet className={classNames(isTablet ? styles.tabletButtons : styles.desktopButtons)}>
-                <Button kind="secondary" onClick={closeWorkspace}>
+                <Button kind="secondary" onClick={() => closeWorkspace()}>
                   {t('close', 'Close')}
                 </Button>
               </ButtonSet>

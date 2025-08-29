@@ -147,6 +147,7 @@ const UploadStudiesWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({ patien
                 buttonLabel={t('chooseFiles', 'Choose Files')}
                 multiple
                 accept={['.dcm', '.zip']}
+                filenameStatus="complete"
                 onChange={(e: any) => {
                   const files = Array.from<File>(e.target.files ?? []);
                   setSelectedFiles(files);
@@ -158,7 +159,7 @@ const UploadStudiesWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({ patien
             <Button type="submit" kind="primary">
               {t('upload', 'Upload')}
             </Button>
-            <Button kind="secondary" onClick={closeWorkspace}>
+            <Button kind="secondary" onClick={() => closeWorkspace()}>
               {t('cancel', 'Cancel')}
             </Button>
           </div>

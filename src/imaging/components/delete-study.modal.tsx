@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
@@ -53,6 +53,7 @@ const DeleteStudyModal: React.FC<DeleteStudyModalProps> = ({ closeDeleteModal, s
       <ModalBody>
         <p>{t('deleteModalConfirmationTextStudy', 'Are you sure you want to delete this study?')}</p>
         <RadioButtonGroup
+          name="delete-study-option"
           className={styles.radioButtonGroup}
           onChange={(value) => handleOptionChange(value)}
           valueSelected={selectedOption}

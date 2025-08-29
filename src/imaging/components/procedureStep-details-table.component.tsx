@@ -78,7 +78,7 @@ const ProcedureStepTable: React.FC<ProcedureStepTableProps> = ({ requestProcedur
   }, [t]);
 
   const tableRows = results?.map((step) => ({
-    id: step.id,
+    id: String(step.id),
     performedProcedureStepStatus: statusText[step.performedProcedureStepStatus],
     modality: {
       sortKey: step.modality,
@@ -155,14 +155,7 @@ const ProcedureStepTable: React.FC<ProcedureStepTableProps> = ({ requestProcedur
                 <TableHead>
                   <TableRow>
                     {headers.map((header) => (
-                      <TableHeader
-                        {...getHeaderProps({
-                          header,
-                          isSortable: header.isSortable,
-                        })}
-                      >
-                        {header.header}
-                      </TableHeader>
+                      <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
                     ))}
                     <TableHeader />
                   </TableRow>

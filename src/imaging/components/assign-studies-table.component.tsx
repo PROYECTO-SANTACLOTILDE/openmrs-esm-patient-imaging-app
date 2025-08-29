@@ -14,7 +14,7 @@ import { compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patien
 import { useLayoutType, usePagination } from '@openmrs/esm-framework';
 
 import { useTranslation } from 'react-i18next';
-import { type DicomStudy, type StudiesWithScores } from '../../types';
+import type { DicomStudy, StudiesWithScores } from '../../types';
 import { studiesCount } from '../constants';
 import stoneview from '../../assets/stoneViewer.png';
 import ohifview from '../../assets/ohifViewer.png';
@@ -41,12 +41,19 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
 
+  // const getStudyScore = ({ study, data }: { study: DicomStudy; data: StudiesWithScores }) => {
+  //   return data.scores[study.studyInstanceUID];
+  // };
+
   const getStudyScore = ({ study, data }: { study: DicomStudy; data: StudiesWithScores }) => {
-    return data.scores[study.studyInstanceUID];
+    if (data.scores instanceof Map) {
+      return data.scores.get(study.studyInstanceUID);
+    }
+    return (data.scores as Record<string, number>)[study.studyInstanceUID];
   };
 
   const studyAssignStatus = ({ study }: { study: DicomStudy }) => {
-    return study.mrsPatientUuid && study.mrsPatientUuid === patientUuid;
+    return !!study.mrsPatientUuid && study.mrsPatientUuid === patientUuid;
   };
 
   const handleAssignChange = (study, checked) => {
@@ -69,7 +76,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
   ].filter(Boolean);
 
   const tableRows = results?.map((study, index) => ({
-    id: study.id ?? `row-${index}`,
+    id: String(study.id ?? `row-${index}`),
     assignCheckbox: (
       <input
         type="checkbox"
@@ -151,14 +158,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
                 <TableHead>
                   <TableRow>
                     {headers.map((header) => (
-                      <TableHeader
-                        {...getHeaderProps({
-                          header,
-                          isSortable: header.isSortable,
-                        })}
-                      >
-                        {header.header}
-                      </TableHeader>
+                      <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
                     ))}
                     <TableHeader />
                   </TableRow>
@@ -189,10 +189,15 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
                             <TableCell colSpan={headers.length}>
                               <div className={styles.seriesTableDiv}>
                                 <SeriesDetailsTable
-                                  studyId={row.id}
-                                  studyInstanceUID={row.studyInstanceUID}
+                                  studyId={Number(row.id)}
+                                  studyInstanceUID={
+                                    row.cells.find((cell) => cell.id === 'studyInstanceUID')?.value?.props?.children ||
+                                    ''
+                                  }
                                   patientUuid={patientUuid}
-                                  orthancBaseUrl={row.orthancConfiguration}
+                                  orthancBaseUrl={
+                                    row.cells.find((cell) => cell.id === 'orthancConfiguration')?.value || ''
+                                  }
                                 />
                               </div>
                             </TableCell>

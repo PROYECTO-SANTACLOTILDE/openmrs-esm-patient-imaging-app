@@ -103,7 +103,6 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
                 shouldOnClickBeCalled.current = false;
                 launchDeleteStudyDialog(study.id);
               }}
-              isDelete
             >
               <TrashCanIcon className={styles.removeButton} />
             </IconButton>
@@ -176,14 +175,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
                 <TableHead>
                   <TableRow>
                     {headers.map((header) => (
-                      <TableHeader
-                        {...getHeaderProps({
-                          header,
-                          isSortable: header.isSortable,
-                        })}
-                      >
-                        {header.header}
-                      </TableHeader>
+                      <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
                     ))}
                     <TableHeader />
                   </TableRow>

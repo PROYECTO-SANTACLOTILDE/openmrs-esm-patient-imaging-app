@@ -16,7 +16,8 @@ import {
   CardHeader,
   compare,
   PatientChartPagination,
-  launchPatientWorkspace,
+  // launchPatientWorkspace,
+  useLaunchWorkspaceRequiringVisit,
   EmptyState,
 } from '@openmrs/esm-patient-common-lib';
 
@@ -39,7 +40,6 @@ import {
 } from '../constants';
 import ProcedureStepTable from './procedureStep-details-table.component';
 import styles from './details-table.scss';
-import { scheduled } from 'rxjs';
 
 export interface RequestProcedureTableProps {
   isValidating?: boolean;
@@ -50,14 +50,14 @@ export interface RequestProcedureTableProps {
 
 const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidating, requests, patientUuid }) => {
   const { t } = useTranslation();
-  const displayText = t('requestProcedure', 'RequestProcedure');
+  const displayText = t('requestProcedureEmptyState', 'No requests found');
   const headerTitle = t('requestProcedure', 'RequestProcedure');
   const { results, goTo, currentPage } = usePagination(requests, requestCount);
   const [expandedRows, setExpandedRows] = useState({});
   const shouldOnClickBeCalled = useRef(true);
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
-  const launchAddNewRequestWorkspace = useCallback(() => launchPatientWorkspace(addNewRequestWorkspace), []);
+  const launchAddNewRequestWorkspace = useCallback(() => useLaunchWorkspaceRequiringVisit(addNewRequestWorkspace), []);
 
   const launchDeleteRequestDialog = (requestId: number) => {
     const dispose = showModal(requestDeleteConfirmationDialog, {
@@ -95,7 +95,7 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
   }, [t]);
 
   const tableRows = results?.map((request, id) => ({
-    id: request.id,
+    id: String(request.id),
     status: {
       sortKey: statusText[request.status],
       content: (
@@ -191,14 +191,7 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
                 <TableHead>
                   <TableRow>
                     {headers.map((header, index) => (
-                      <TableHeader
-                        {...getHeaderProps({
-                          header,
-                          isSortable: header.isSortable,
-                        })}
-                      >
-                        {header.header}
-                      </TableHeader>
+                      <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
                     ))}
                     <TableHeader />
                   </TableRow>
@@ -228,7 +221,7 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
                           <TableRow className={styles.expandedRow}>
                             <TableCell colSpan={headers.length}>
                               <div className={styles.procedureStepTableDiv}>
-                                <ProcedureStepTable requestProcedure={row} />
+                                <ProcedureStepTable requestProcedure={results[rowIndex]} />
                               </div>
                             </TableCell>
                           </TableRow>

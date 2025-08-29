@@ -158,7 +158,7 @@ const LinkStudiesWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({ patientU
             <Button kind="primary" type="submit">
               {t('fetchStudy', 'Fetch Study')}
             </Button>
-            <Button kind="secondary" onClick={closeWorkspace}>
+            <Button kind="secondary" onClick={() => closeWorkspace()}>
               {t('cancel', 'Cancel')}
             </Button>
           </ButtonSet>

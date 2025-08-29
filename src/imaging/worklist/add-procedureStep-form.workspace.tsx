@@ -267,17 +267,22 @@ const AddNewProcedureStepWorkspace: React.FC<AddNewProcedureStepWorkspaceProps> 
                       name="timeFormat"
                       control={control}
                       render={({ field: { onChange, value } }) => (
-                        <TimePickerSelect
-                          id="timeFormatSelect"
-                          onChange={(event) => onChange(event.target.value as amPm)}
-                          value={value}
-                          aria-label={t('timeFormat ', 'Time Format')}
+                        <TimePicker
+                          id="time-picker"
+                          labelText="Select Time"
                           invalid={!!errors?.timeFormat}
-                          invalidText={errors?.timeFormat?.message || t('seletTimeFormat', 'Time format is required')}
+                          invalidText={errors?.timeFormat?.message || t('selectTimeFormat', 'Time format is required')}
                         >
-                          <SelectItem value="AM" text={t('AM', 'AM')} />
-                          <SelectItem value="PM" text={t('PM', 'PM')} />
-                        </TimePickerSelect>
+                          <TimePickerSelect
+                            id="timeFormatSelect"
+                            onChange={(event) => onChange(event.target.value as amPm)}
+                            value={value}
+                            aria-label={t('timeFormat ', 'Time Format')}
+                          >
+                            <SelectItem value="AM" text={t('AM', 'AM')} />
+                            <SelectItem value="PM" text={t('PM', 'PM')} />
+                          </TimePickerSelect>
+                        </TimePicker>
                       )}
                     />
                   </TimePicker>
@@ -325,7 +330,7 @@ const AddNewProcedureStepWorkspace: React.FC<AddNewProcedureStepWorkspaceProps> 
           </section>
         </Stack>
         <ButtonSet className={isTablet ? styles.tabletButtons : styles.desktopButtons}>
-          <Button className={styles.button} kind="secondary" onClick={closeWorkspace}>
+          <Button className={styles.button} kind="secondary" onClick={() => closeWorkspace()}>
             {t('discard', 'Discard')}
           </Button>
           <Button className={styles.button} kind="primary" disabled={isSubmitting} type="submit">
