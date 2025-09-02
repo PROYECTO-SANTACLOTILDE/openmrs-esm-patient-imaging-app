@@ -38,7 +38,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
   patientUuid,
 }) => {
   const { t } = useTranslation();
-  const displayText = t('studies', 'studies');
+  const displayText = t('studiesNoFoundMessage', 'No studies found');
   const headerTitle = t('Studies', 'Studies');
   const { results, goTo, currentPage } = usePagination(studies ?? [], studiesCount);
   const [expandedRows, setExpandedRows] = useState({});
@@ -98,7 +98,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
               kind="ghost"
               align="left"
               size={isTablet ? 'lg' : 'sm'}
-              label={t('removeStudy', 'RemoveStudy')}
+              label={t('removeStudy', 'Remove study')}
               onClick={() => {
                 shouldOnClickBeCalled.current = false;
                 launchDeleteStudyDialog(study.id);

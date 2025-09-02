@@ -1,8 +1,8 @@
 import React, { act } from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import RequestProcedureTable, { RequestProcedureTableProps } from './requests-details-table.component';
-import { createGlobalStore, usePagination } from '@openmrs/esm-framework';
-import { RequestProcedure } from '../../types';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import RequestProcedureTable from './requests-details-table.component';
+import { usePagination } from '@openmrs/esm-framework';
+import * as framework from '@openmrs/esm-framework';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -24,6 +24,8 @@ jest.mock('@openmrs/esm-framework', () => ({
     goto: jest.fn(),
     currentPage: 1,
   })),
+  AddIcon: (props: any) => <span {...props}>AddIcon</span>,
+  TrashCanIcon: (props: any) => <span {...props}>TrashCanIcon</span>,
 }));
 
 // Mock other OpenMRS libs
@@ -50,11 +52,20 @@ describe('RequestProcedureTable', () => {
       requestingPhysician: 'Dr. Who',
       studyInstanceUID: 'UID123',
       requestDescription: 'MRI scan',
-      orthancConfiguration: { orthancBaseUrl: 'http://orthanc.local' },
+      orthancConfiguration: { id: 1, orthancBaseUrl: 'http://orthanc.local' },
       patientUuid: patientUuid,
       accessionNumber: 'ACC123',
     },
   ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (usePagination as jest.Mock).mockReturnValue({
+      results: mockRequests,
+      currentPage: 1,
+      goTo: jest.fn(),
+    });
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -65,5 +76,43 @@ describe('RequestProcedureTable', () => {
       render(<RequestProcedureTable requests={[]} patientUuid={patientUuid} />);
     });
     expect(screen.getByText(/No requests found/i)).toBeInTheDocument();
+  });
+
+  it('renders table rows when requests are provided', async () => {
+    await act(async () => {
+      render(<RequestProcedureTable requests={mockRequests} patientUuid={patientUuid} />);
+    });
+    expect(screen.getByText(/MRI scan/i)).toBeInTheDocument();
+    expect(screen.getByText(/Dr. Who/i)).toBeInTheDocument();
+    expect(screen.getByText(/scheduled/i)).toBeInTheDocument();
+  });
+
+  it('call showModal when delete icon is clicked', async () => {
+    const mockDispose = jest.fn();
+    (framework.showModal as jest.Mock).mockReturnValue(mockDispose);
+
+    await act(async () => {
+      render(<RequestProcedureTable requests={mockRequests} patientUuid={patientUuid} />);
+    });
+
+    const deleteButton = screen.getByLabelText(/Remove requst/i);
+    fireEvent.click(deleteButton);
+
+    expect(framework.showModal).toHaveBeenCalled();
+  });
+
+  it('renders ProcedureStepTable when a row is expanded', async () => {
+    await act(async () => {
+      render(<RequestProcedureTable requests={mockRequests} patientUuid={patientUuid} />);
+    });
+
+    const row = screen.getByText(/MRI scan/i).closest('tr');
+    expect(row).toBeInTheDocument();
+
+    fireEvent.doubleClick(row!);
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/procedureStep/i)).toBeInTheDocument();
+    });
   });
 });

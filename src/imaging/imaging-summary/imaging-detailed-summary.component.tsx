@@ -39,7 +39,6 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
   return (
     <div>
       <div style={{ marginBottom: '2rem' }}>
-        {/* <div> */}
         <CardHeader title={headerTitle}>
           <Button
             kind="ghost"
@@ -58,9 +57,8 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
             {t('upload', 'Upload')}
           </Button>
         </CardHeader>
-        {/* </div> */}
         {(() => {
-          const displayText = t('studies', 'studies');
+          const displayTextStudies = t('studiesNoFoundMessage', 'No studies found');
           const headerTitle = t('Studies', 'Studies');
 
           if (isLoadingPatientStudies) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
@@ -78,13 +76,17 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
             );
           }
           return (
-            <EmptyState displayText={displayText} headerTitle={headerTitle} launchForm={launchUploadStudiesWorkspace} />
+            <EmptyState
+              displayText={displayTextStudies}
+              headerTitle={headerTitle}
+              launchForm={launchUploadStudiesWorkspace}
+            />
           );
         })()}
       </div>
       <div>
         {(() => {
-          const displayText = t('worklist', 'Worklist');
+          const displayTextWorklist = t('worklistNoFoundMessage', 'No worklist found');
           const headerTitle = t('worklist', 'Worklist');
 
           if (isLoadingRequests) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
@@ -101,7 +103,11 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
             );
           }
           return (
-            <EmptyState displayText={displayText} headerTitle={headerTitle} launchForm={launchAddRequestWorkspace} />
+            <EmptyState
+              displayText={displayTextWorklist}
+              headerTitle={headerTitle}
+              launchForm={launchAddRequestWorkspace}
+            />
           );
         })()}
       </div>

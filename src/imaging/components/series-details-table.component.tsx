@@ -45,7 +45,7 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
   } = useStudySeries(studyId);
 
   const { t } = useTranslation();
-  const displayText = t('series', 'Series');
+  const displayText = t('NoSeriesAvailable', 'No series available');
   const headerTitle = t('series', 'Series');
   const { results, goTo, currentPage } = usePagination(seriesList, seriesCount);
   const [expandedRows, setExpandedRows] = useState({});

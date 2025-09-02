@@ -33,7 +33,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
   assignStudyFunction: assignStudyFunction,
 }) => {
   const { t } = useTranslation();
-  const displayText = t('studies', 'studies');
+  const displayText = t('studiesNoFoundMessage', 'No studies found');
   const headerTitle = t('Studies', 'Studies');
   const { results, goTo, currentPage } = usePagination(data.studies ?? [], studiesCount);
   const [expandedRows, setExpandedRows] = useState({});
