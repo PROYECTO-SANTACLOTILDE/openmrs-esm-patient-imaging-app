@@ -46,6 +46,7 @@
   "studyDate": "Date",
   "studyInstanceUID": "Study UID",
   "time": "Time",
+  "StartTime": "Start time",
   "upload": "Upload",
   "worklist": "Worklist",
   "worklistNoFoundMessage": "No worklist found",
@@ -110,5 +111,6 @@
   "enterRequestDescription": "Please enter the request procedure description",
   "requestDescription": "Request procedure description",
   "selectPriority": "Select the request priority",
-  "saveAndClose": "Save and Close"
+  "saveAndClose": "Save and Close",
+  "chooseFiles": "Choose Files"
 }

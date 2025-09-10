@@ -142,6 +142,7 @@ const AddNewProcedureStepWorkspace: React.FC<AddNewProcedureStepWorkspaceProps> 
                     <div className={styles.row}>
                       <ComboBox
                         id="modality"
+                        data-testid="modality"
                         itemToString={(item) => item?.label || ''}
                         items={modalityOptions}
                         onChange={({ selectedItem }) => onChange(selectedItem?.code)}
@@ -240,7 +241,7 @@ const AddNewProcedureStepWorkspace: React.FC<AddNewProcedureStepWorkspaceProps> 
                     style={{ paddingBottom: '1rem', width: '100%' }}
                     labelText={t('stepStartDate', 'StepStartDate')}
                     invalid={Boolean(fieldState?.error?.message)}
-                    invalidText={fieldState?.error?.message}
+                    invalidText={fieldState?.error?.message || t('selectStepStartDate', 'Start date is required')}
                   />
                 )}
               />
@@ -254,7 +255,8 @@ const AddNewProcedureStepWorkspace: React.FC<AddNewProcedureStepWorkspaceProps> 
                 render={({ field: { onBlur, onChange, value } }) => (
                   <TimePicker
                     id="stepStartTime"
-                    labelText={t('time', 'Time')}
+                    data-testid="stepStartTime"
+                    labelText={t('startTime', 'Start time')}
                     onChange={(event) => onChange(event.target.value as amPm)}
                     pattern="^(1[0-2]|0?[1-9]):([0-5]?[0-9])$"
                     style={{ marginLeft: '0.125rem', flex: 'none' }}
