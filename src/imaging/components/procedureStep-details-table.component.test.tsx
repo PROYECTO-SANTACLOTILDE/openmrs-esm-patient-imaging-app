@@ -32,21 +32,23 @@ jest.mock('@openmrs/esm-patient-common-lib', () => ({
 }));
 
 describe('ProcedureStepTable', () => {
+  const orignalError = console.error;
+
   const defaultProps: ProcedureStepTableProps = {
     requestProcedure: { id: 1, description: 'Test procedure' } as any,
   };
 
   beforeAll(() => {
     jest.spyOn(console, 'error').mockImplementation((msg, ...args) => {
-      if (typeof msg === 'string' && msg.includes('validateDOMNesting')) {
+      if (typeof msg === 'string' && (msg.includes('ResizeObserver') || msg.includes('act(...)'))) {
         return;
       }
-      console.error(msg, ...args);
+      orignalError(msg, ...args);
     });
   });
 
   afterAll(() => {
-    (console.error as jest.Mock).mockRestore();
+    console.error = orignalError;
   });
 
   beforeEach(() => {

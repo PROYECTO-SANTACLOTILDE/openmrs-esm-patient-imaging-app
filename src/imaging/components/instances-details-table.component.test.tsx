@@ -32,6 +32,8 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe('InstancesDetailsTable', () => {
+  const orignalError = console.error;
+
   const defaultProps: InstancesDetailsTableProps = {
     studyId: 1,
     studyInstanceUID: '1.2.3',
@@ -39,17 +41,18 @@ describe('InstancesDetailsTable', () => {
     orthancBaseUrl: 'http://orthanc-server',
     seriesModality: 'CT',
   };
+
   beforeAll(() => {
     jest.spyOn(console, 'error').mockImplementation((msg, ...args) => {
-      if (typeof msg === 'string' && msg.includes('validateDOMNesting')) {
+      if (msg.includes('warning') || msg.includes('ResizeObserver')) {
         return;
       }
-      console.error(msg, ...args);
+      orignalError(msg, ...args);
     });
   });
 
   afterAll(() => {
-    (console.error as jest.Mock).mockRestore();
+    console.error = orignalError;
   });
 
   beforeEach(() => {
