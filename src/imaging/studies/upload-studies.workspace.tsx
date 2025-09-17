@@ -126,6 +126,7 @@ const UploadStudiesWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({ patien
                       placeholder={t('selectOrthancServer', 'Select an Orthanc server')}
                       selectedItem={value}
                       invalid={!!errors.orthancConfiguration}
+                      data-testid="orthanc-server-combobox"
                       invalidText={
                         errors.orthancConfiguration?.message ||
                         t('selectValidServer', 'Please select a valid Orthanc server')
@@ -139,6 +140,7 @@ const UploadStudiesWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({ patien
           <section>
             <div className={styles.container}>
               <FileUploader
+                data-testid="upload-studies-fileuploader"
                 labelTitle={
                   t('selectFilesToUpload', 'Select files to upload (dicom or zip). Max size:') +
                   `${maxUploadImageDataSize / 1000000} MB`
@@ -156,10 +158,10 @@ const UploadStudiesWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({ patien
             </div>
           </section>
           <div className={styles['popup-box-btn']}>
-            <Button type="submit" kind="primary">
+            <Button type="submit" kind="primary" data-testid="upload-studies-submit">
               {t('upload', 'Upload')}
             </Button>
-            <Button kind="secondary" onClick={() => closeWorkspace()}>
+            <Button kind="secondary" onClick={() => closeWorkspace()} data-testid="upload-studies-cancel">
               {t('cancel', 'Cancel')}
             </Button>
           </div>

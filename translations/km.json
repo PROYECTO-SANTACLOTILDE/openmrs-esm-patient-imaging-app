@@ -101,6 +101,7 @@
   "errorSavingRequest": "An error occurred while saving the request procedure",
   "selectModality": "Select the modality",
   "accessNumberWarn": "Accession number is required",
+  "accessNumber": "Accession Number",
   "requestingPhysicianMsg": "Enter the requesting physician name",
   "requestDescriptionMsg": "Enter the request procedure description",
   "priorityWarn": "Priority is required",

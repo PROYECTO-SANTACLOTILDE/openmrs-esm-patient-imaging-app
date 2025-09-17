@@ -54,5 +54,6 @@
   "time": "Time",
   "upload": "Upload",
   "worklist": "Worklist",
-  "worklistNoFoundMessage": "No worklist found"
+  "worklistNoFoundMessage": "No worklist found",
+  "accessNumber": "Accession Number"
 }

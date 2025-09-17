@@ -7,7 +7,7 @@ import { Button, ButtonSet, ComboBox, Form, TextArea, TextInput, Stack, FormGrou
 import { type DefaultPatientWorkspaceProps } from '@openmrs/esm-patient-common-lib';
 import { type CreateRequestProcedure, type OrthancConfiguration, priorityLevels } from '../../types';
 import { Controller, useForm, FormProvider } from 'react-hook-form';
-import { saveRequestProcedure, useOrthancConfigurations, useStudiesByPatient, useRequestsByPatient } from '../../api';
+import { saveRequestProcedure, useOrthancConfigurations, useRequestsByPatient } from '../../api';
 import { generateAccessionNumber } from '../utils/help';
 import styles from './worklist.scss';
 
@@ -134,7 +134,7 @@ const AddNewRequestWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({
                     <TextInput
                       type="text"
                       id="accessionNumber"
-                      labelText={t('accessionNumber', 'accessionNumber')}
+                      labelText={t('accessionNumber', 'Accession Number')}
                       value={value}
                       onChange={(evt) => onChange(evt.target.value)}
                       invalid={!!errors.accessionNumber}

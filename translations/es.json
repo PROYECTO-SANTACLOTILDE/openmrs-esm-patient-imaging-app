@@ -112,5 +112,6 @@
   "requestDescription": "Request procedure description",
   "selectPriority": "Select the request priority",
   "saveAndClose": "Save and Close",
-  "chooseFiles": "Choose Files"
+  "chooseFiles": "Choose Files",
+  "accessNumber": "Accession Number"
 }

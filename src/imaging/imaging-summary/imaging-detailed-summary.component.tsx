@@ -61,7 +61,8 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
           const displayTextStudies = t('studiesNoFoundMessage', 'No studies found');
           const headerTitle = t('Studies', 'Studies');
 
-          if (isLoadingPatientStudies) return <DataTableSkeleton role="progressbar" compact={isDesktop} zebra />;
+          if (isLoadingPatientStudies)
+            return <DataTableSkeleton data-testid="studies-loading" role="progressbar" compact={isDesktop} zebra />;
 
           if (studiesError) return <ErrorState error={studiesError} headerTitle={headerTitle} />;
 
