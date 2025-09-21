@@ -1,11 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import AddNewProcedureStepWorkspace from './add-procedureStep-form.workspace';
 import * as api from '../../api';
 import AddNewRequestWorkspace from './add-request-form.workspace';
-import { CloseWorkspaceOptions, ResponsiveWrapper, showSnackbar } from '@openmrs/esm-framework';
+import { showSnackbar } from '@openmrs/esm-framework';
 import userEvent from '@testing-library/user-event';
-import { priorityLevels } from '../../types';
 
 jest.mock('../../api');
 jest.mock('@openmrs/esm-framework', () => ({
@@ -21,6 +19,16 @@ describe('AddNewProcedureStepWorkspace', () => {
   const mockCloseWithChanges = jest.fn();
   const orthancConfigMock = [{ id: 1, orthancBaseUrl: 'http://orthanc.local', orthancProxyUrl: '' }];
 
+  const fillForm = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(screen.getByPlaceholderText(/Select an Orthanc server/i));
+    await user.click(await screen.findByText(/orthanc.local/i));
+    await user.type(screen.getByTestId(/accessionNumber/i), 'ACC123');
+    await user.type(screen.getByLabelText(/Physician/i), 'Dr. ABC');
+    await user.type(screen.getByLabelText(/Request procedure description/i), 'Test procedure');
+    await user.click(screen.getByPlaceholderText(/Select the request priority/i));
+    await user.click(screen.getByText(/low/i));
+  };
+
   const defaultProps = {
     patientUuid,
     patient: null,
@@ -31,6 +39,7 @@ describe('AddNewProcedureStepWorkspace', () => {
   };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     jest.resetAllMocks();
     (api.useOrthancConfigurations as jest.Mock).mockReturnValue({
       data: [{ id: 1, orthancBaseUrl: 'http://orthanc.local', orthancProxyUrl: '' }],
@@ -51,7 +60,7 @@ describe('AddNewProcedureStepWorkspace', () => {
       />,
     );
 
-    expect(screen.getByLabelText(/accessionNumber/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/accessionNumber/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Physician/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Request procedure description/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Save and Close/i })).toBeInTheDocument();
@@ -87,7 +96,7 @@ describe('AddNewProcedureStepWorkspace', () => {
     const button = screen.getByRole('button', { name: /Generate number/i });
     fireEvent.click(button);
 
-    await waitFor(() => expect((screen.getByLabelText(/accessionNumber/i) as HTMLInputElement).value).not.toBe(''));
+    await waitFor(() => expect((screen.getByTestId(/accessionNumber/i) as HTMLInputElement).value).not.toBe(''));
   });
 
   it('submits form successfully', async () => {
@@ -100,7 +109,7 @@ describe('AddNewProcedureStepWorkspace', () => {
     const option = await screen.findByText(/orthanc.local/i);
     await user.click(option);
 
-    await user.type(screen.getByLabelText(/accessionNumber/i), 'ACC123');
+    await user.type(screen.getByTestId(/accessionNumber/i), 'ACC123');
     await user.type(screen.getByLabelText(/Physician/i), 'Dr.ABC');
     await user.type(screen.getByLabelText(/Request procedure description/i), 'Chest X-ray');
 
@@ -139,18 +148,7 @@ describe('AddNewProcedureStepWorkspace', () => {
 
     render(<AddNewRequestWorkspace {...defaultProps} />);
 
-    const comboBox = screen.getByPlaceholderText(/Select an Orthanc server/i);
-    await user.click(comboBox);
-
-    const option = await screen.findByText(/http:\/\/orthanc.local/i);
-    await user.click(option);
-
-    await user.type(screen.getByLabelText(/accessionNumber/i), 'ACC123');
-    await user.type(screen.getByLabelText(/Physician/i), 'Dr. ABC');
-    await user.type(screen.getByLabelText(/Request procedure description/i), 'Test procedure');
-
-    await user.click(screen.getByPlaceholderText(/Select the request priority/i));
-    await user.click(screen.getByText(/low/i));
+    await fillForm(user);
 
     await user.click(screen.getByRole('button', { name: /Save and Close/i }));
 

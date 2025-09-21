@@ -134,6 +134,7 @@ const AddNewRequestWorkspace: React.FC<DefaultPatientWorkspaceProps> = ({
                     <TextInput
                       type="text"
                       id="accessionNumber"
+                      data-testid="accessionNumber"
                       labelText={t('accessionNumber', 'Accession Number')}
                       value={value}
                       onChange={(evt) => onChange(evt.target.value)}
