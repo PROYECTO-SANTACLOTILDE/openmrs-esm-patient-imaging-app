@@ -20,6 +20,7 @@ import stoneview from '../../assets/stoneViewer.png';
 import ohifview from '../../assets/ohifViewer.png';
 import SeriesDetailsTable from './series-details-table.component';
 import styles from './details-table.scss';
+import { buildURL } from '../utils/help';
 
 export interface AssignStudiesTableProps {
   data?: StudiesWithScores | null;
@@ -115,7 +116,11 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
             size={isTablet ? 'lg' : 'sm'}
             label={t('stoneviewer', 'Stone viewer of Orthanc')}
             onClick={() =>
-              (window.location.href = `${study.orthancConfiguration.orthancBaseUrl}/stoneview/${study.id}`)
+              (window.location.href = buildURL(
+                study.orthancConfiguration.orthancBaseUrl,
+                '/stone-webviewer/index.html',
+                [{ code: 'study', value: study.studyInstanceUID }],
+              ))
             }
           >
             <img className="stone-img" src={stoneview} style={{ width: 23, height: 14, marginTop: 4 }}></img>
@@ -125,7 +130,11 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
             align="left"
             size={isTablet ? 'lg' : 'sm'}
             label={t('ohifviewer', 'Ohif viewer')}
-            onClick={() => (window.location.href = `${study.orthancConfiguration.orthancBaseUrl}/ohifview/${study.id}`)}
+            onClick={() =>
+              (window.location.href = buildURL(study.orthancConfiguration.orthancBaseUrl, '/ohif/viewer', [
+                { code: 'StudyInstanceUIDs', value: study.studyInstanceUID },
+              ]))
+            }
           >
             <img className="orthanc-img" src={ohifview} style={{ width: 26, height: 26, marginTop: 0 }}></img>
           </IconButton>

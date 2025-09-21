@@ -10,6 +10,8 @@ import type {
   RequestProcedureStep,
   Series,
 } from '../../src/types';
+import path from 'path';
+import fs from 'fs';
 
 const imagingUrl = '/openmrs/ws/rest/v1/imaging';
 const worklistUrl = '/openmrs/ws/rest/v1/worklist';
@@ -17,11 +19,7 @@ const worklistUrl = '/openmrs/ws/rest/v1/worklist';
 /**
  * Delete a study
  */
-export const deleteStudy = async (
-  api: APIRequestContext,
-  studyId: string,
-  deleteOption: 'openmrs' | 'orthanc' = 'openmrs',
-) => {
+export const deleteStudy = async (api: APIRequestContext, studyId: string, deleteOption: 'openmrs' | 'orthanc') => {
   const res = await api.delete(`${imagingUrl}/study?studyId=${studyId}&deleteOption=${deleteOption}`);
   await expect(res.ok()).toBeTruthy();
 };
@@ -41,17 +39,19 @@ export const getStudiesByConfig = async (
 /**
  * Create a request
  */
-export const createRequest = async (
-  api: APIRequestContext,
-  patientUuid: string,
-  request: CreateRequestProcedure,
-): Promise<RequestProcedure> => {
+export const createRequest = async (api: APIRequestContext, request: CreateRequestProcedure): Promise<void> => {
   const res = await api.post(`${worklistUrl}/saverequest`, {
-    data: { ...request, patientUuid },
+    data: {
+      patientUuid: request.patientUuid,
+      configurationId: request.orthancConfiguration.id,
+      accessionNumber: request.accessionNumber,
+      requestingPhysician: request.requestingPhysician,
+      requestDescription: request.requestDescription,
+      priority: request.priority,
+    },
     headers: { 'Content-Type': 'application/json' },
   });
   await expect(res.ok()).toBeTruthy();
-  return await res.json();
 };
 
 /**
@@ -69,12 +69,22 @@ export const createProcedureStep = async (
   api: APIRequestContext,
   requestId: number,
   step: CreateRequestProcedureStep,
-): Promise<RequestProcedureStep> => {
+): Promise<void> => {
   const res = await api.post(`${worklistUrl}/savestep`, {
-    data: { ...step, requestId },
+    data: {
+      requestId: requestId,
+      modality: step.modality,
+      aetTitle: step.aetTitle,
+      scheduledReferringPhysician: step.scheduledReferringPhysician,
+      requestedProcedureDescription: step.requestedProcedureDescription,
+      stepStartDate: step.stepStartDate,
+      stepStartTime: step.stepStartTime,
+      stationName: step.stationName,
+      procedureStepLocation: step.procedureStepLocation,
+    },
+    headers: { 'Content-Type': 'application/json' },
   });
   await expect(res.ok()).toBeTruthy();
-  return await res.json();
 };
 
 /**
@@ -96,7 +106,6 @@ export const assignStudy = async (api: APIRequestContext, studyId: number, patie
 
   const res = await api.post(`${imagingUrl}/assingstudy`, {
     form: formData,
-    //headers: { 'Content-Type': 'application/json', },
   });
 
   await expect(res.ok()).toBeTruthy();
@@ -146,8 +155,7 @@ export const getRequestsByPatient = async (
 ): Promise<RequestProcedure[]> => {
   const res = await api.get(`${worklistUrl}/patientrequests?patient=${patientUuid}`);
   await expect(res.ok()).toBeTruthy();
-  const { data } = await res.json();
-  return data as RequestProcedure[];
+  return await res.json();
 };
 
 /**
@@ -156,8 +164,7 @@ export const getRequestsByPatient = async (
 export const getProcedureSteps = async (api: APIRequestContext, requestId: number): Promise<RequestProcedureStep[]> => {
   const res = await api.get(`${worklistUrl}/requeststep?&requestId=${requestId}`);
   await expect(res.ok()).toBeTruthy();
-  const { data } = await res.json();
-  return data as RequestProcedureStep[];
+  return await res.json();
 };
 
 /**
@@ -166,8 +173,7 @@ export const getProcedureSteps = async (api: APIRequestContext, requestId: numbe
 export const getStudySeries = async (api: APIRequestContext, studyId: number): Promise<Series[]> => {
   const res = await api.get(`${imagingUrl}/studyseries?studyId=${studyId}`);
   await expect(res.ok()).toBeTruthy();
-  const { data } = await res.json();
-  return data as Series[];
+  return await res.json();
 };
 
 /**
@@ -180,8 +186,7 @@ export const getStudyInstances = async (
 ): Promise<Instance[]> => {
   const res = await api.get(`${imagingUrl}/studyinstances?studyId=${studyId}&seriesInstanceUID=${seriesInstanceUID}`);
   await expect(res.ok()).toBeTruthy();
-  const { data } = await res.json();
-  return data as Instance[];
+  return await res.json();
 };
 
 /**
@@ -191,6 +196,81 @@ export const previewInstance = async (api: APIRequestContext, orthancInstanceUID
   const res = await api.get(
     `${imagingUrl}/previewinstance?orthancInstanceUID=${orthancInstanceUID}&studyId=${studyId}`,
   );
+
+  await expect(res.ok()).toBeTruthy();
+
+  const buffer = Buffer.from(await res.body());
+
+  return {
+    data: buffer,
+    contentType: res.headers()['content-type'],
+  };
+};
+
+/**
+ * Upload dicom study to the Orthanc server
+ */
+export const uploadStudies = async (
+  api: APIRequestContext,
+  filesNames: string[],
+  orthancConfig: OrthancConfiguration,
+): Promise<void> => {
+  const uploadUrl = `${imagingUrl}/instances`;
+  for (const fileName of filesNames) {
+    const filePath = path.resolve(__dirname, '../../__mocks__', fileName);
+    const fileBuffer = fs.readFileSync(filePath);
+
+    const multipart = {
+      configurationId: orthancConfig.id.toString(),
+      file: {
+        name: fileName,
+        mimeType: 'application/dicom',
+        buffer: Buffer.isBuffer(fileBuffer) ? fileBuffer : Buffer.from(fileBuffer),
+      },
+    };
+
+    const res = await api.post(uploadUrl, { multipart });
+    if (!res.ok()) {
+      const body = await res.text();
+      throw new Error(`Upload failed: ${body}`);
+    }
+    await expect(res.ok()).toBeTruthy();
+  }
+};
+
+/**
+ * Get configured orthanc servers
+ */
+export const getOrthancConfigurations = async (api: APIRequestContext): Promise<OrthancConfiguration[]> => {
+  const res = await api.get(`${imagingUrl}/configurations`);
   await expect(res.ok()).toBeTruthy();
   return await res.json();
 };
+
+// Delete all studies in openmrs database and all orthanc servers, so there are
+// no old studies that don't exist anymore in orthanc
+export async function cleanOrthanc(request, api, patientUuid) {
+  const orthancConfigurations = await getOrthancConfigurations(api);
+  expect(orthancConfigurations.length).toBeGreaterThan(0);
+
+  if (patientUuid) {
+    for (const config of orthancConfigurations) {
+      await linkStudies(request, config, 'all');
+      const studies = await getStudiesByConfig(api, config, patientUuid);
+      for (const study of studies) {
+        await deleteStudy(api, study.id.toString(), 'orthanc');
+      }
+
+      await expect
+        .poll(
+          async () => {
+            await linkStudies(request, config, 'all');
+            const remaining = await getStudiesByConfig(api, config, patientUuid);
+            return remaining.length;
+          },
+          { timeout: 20_000 },
+        )
+        .toBe(0);
+    }
+  }
+}

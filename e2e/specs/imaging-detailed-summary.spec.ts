@@ -1,11 +1,11 @@
 import { expect } from '@playwright/test';
 import { DicomStudy, RequestProcedure } from '../commands/types';
 import { test } from '../core';
-import { createRequest, createProcedureStep, deleteRequest, deleteStudy, getStudiesByPatient } from '../commands';
+import { cleanOrthanc } from '../commands/imaging-operations';
 
 let patientUuid: string;
 
-test.beforeEach(async ({ api, patient }) => {
+test.beforeEach(async ({ api, patient, request }) => {
   patientUuid = patient.uuid;
 });
 
