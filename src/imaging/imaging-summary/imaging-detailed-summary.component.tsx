@@ -40,22 +40,24 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <CardHeader title={headerTitle}>
-          <Button
-            kind="ghost"
-            renderIcon={(props) => <AddIcon size={16} {...props} />}
-            iconDescription={t('linkStudies', 'Studies')}
-            onClick={launchLinkStudiesWorkspace}
-          >
-            {t('linkStudie', 'Link studies')}
-          </Button>
-          <Button
-            kind="ghost"
-            renderIcon={(props) => <AddIcon size={16} {...props} />}
-            iconDescription={t('upload', 'Upload')}
-            onClick={launchUploadStudiesWorkspace}
-          >
-            {t('upload', 'Upload')}
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '1rem', width: '50%' }}>
+            <Button
+              kind="ghost"
+              renderIcon={(props) => <AddIcon size={16} {...props} />}
+              iconDescription={t('linkStudies', 'Studies')}
+              onClick={launchLinkStudiesWorkspace}
+            >
+              {t('linkStudie', 'Link studies')}
+            </Button>
+            <Button
+              kind="ghost"
+              renderIcon={(props) => <AddIcon size={16} {...props} />}
+              iconDescription={t('upload', 'Upload')}
+              onClick={launchUploadStudiesWorkspace}
+            >
+              {t('upload', 'Upload')}
+            </Button>
+          </div>
         </CardHeader>
         {(() => {
           const displayTextStudies = t('studiesNoFoundMessage', 'No studies found');

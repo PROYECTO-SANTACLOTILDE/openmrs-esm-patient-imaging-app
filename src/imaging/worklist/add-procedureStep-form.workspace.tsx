@@ -269,22 +269,15 @@ const AddNewProcedureStepWorkspace: React.FC<AddNewProcedureStepWorkspaceProps> 
                       name="timeFormat"
                       control={control}
                       render={({ field: { onChange, value } }) => (
-                        <TimePicker
-                          id="time-picker"
-                          labelText="Select Time"
-                          invalid={!!errors?.timeFormat}
-                          invalidText={errors?.timeFormat?.message || t('selectTimeFormat', 'Time format is required')}
+                        <TimePickerSelect
+                          id="timeFormatSelect"
+                          onChange={(event) => onChange(event.target.value as amPm)}
+                          value={value}
+                          aria-label={t('timeFormat ', 'Time Format')}
                         >
-                          <TimePickerSelect
-                            id="timeFormatSelect"
-                            onChange={(event) => onChange(event.target.value as amPm)}
-                            value={value}
-                            aria-label={t('timeFormat ', 'Time Format')}
-                          >
-                            <SelectItem value="AM" text={t('AM', 'AM')} />
-                            <SelectItem value="PM" text={t('PM', 'PM')} />
-                          </TimePickerSelect>
-                        </TimePicker>
+                          <SelectItem value="AM" text={t('AM', 'AM')} />
+                          <SelectItem value="PM" text={t('PM', 'PM')} />
+                        </TimePickerSelect>
                       )}
                     />
                   </TimePicker>
