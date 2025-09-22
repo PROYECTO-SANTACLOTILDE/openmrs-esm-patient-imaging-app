@@ -278,4 +278,37 @@ describe('SeriesDetailsTable', () => {
     fireEvent.click(headers[0]);
     fireEvent.click(headers[0]);
   });
+
+  it('does not render preview buttons for RTSTRUCT or RTDOSE', async () => {
+    const mockSeriesRT = [
+      {
+        seriesInstanceUID: 'SERIES_RT',
+        modality: 'RTSTRUCT',
+        seriesDate: '2025-09-02',
+        seriesDescription: 'Structure',
+        orthancSeriesUID: 'UID_RT',
+      },
+    ];
+
+    (api.useStudySeries as jest.Mock).mockReturnValue({
+      data: mockSeriesRT,
+      error: null,
+      isLoading: false,
+      isValidating: false,
+    });
+
+    await act(async () => {
+      render(
+        <SeriesDetailsTable
+          studyId={1}
+          studyInstanceUID="1.2.3"
+          patientUuid="patient-123"
+          orthancBaseUrl="http://orthanc.local"
+        />,
+      );
+    });
+
+    expect(screen.queryByLabelText(/Instance preview local/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/Instance view in Orthanc/i)).not.toBeInTheDocument();
+  });
 });
