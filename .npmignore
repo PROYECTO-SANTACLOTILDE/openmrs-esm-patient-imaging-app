@@ -1,6 +1,6 @@
 # Dependency directories
 node_modules/
-
+playwright-report/
 
 # ignores for Yarn v3 w/o PNP
 .pnp.*
