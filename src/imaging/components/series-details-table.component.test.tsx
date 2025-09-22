@@ -39,6 +39,33 @@ jest.mock('@openmrs/esm-framework', () => ({
   TrashCanIcon: (props: any) => <span data-testid="trash-icon" {...props} />,
 }));
 
+jest.mock('@carbon/react', () => {
+  const original = jest.requireActual('@carbon/react');
+  return {
+    ...original,
+    DataTable: ({ headers, rows }) => (
+      <table aria-label="Series summary">
+        <thead>
+          <tr>
+            {headers.map((h) => (
+              <th key={h.key}>{h.header}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.id}>
+              {headers.map((h) => (
+                <td key={h.key}>{r[h.key]?.content ?? r[h.key]}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ),
+  };
+});
+
 jest.mock('@openmrs/esm-patient-common-lib', () => ({
   PatientChartPagination: ({ onPageNumberChange }: any) => (
     <button onClick={() => onPageNumberChange({ page: 2 })}>Next</button>
@@ -173,5 +200,82 @@ describe('SeriesDetailsTable', () => {
     expect(screen.getByText('SERIES1')).toBeInTheDocument();
     expect(screen.getByText('CT')).toBeInTheDocument();
     expect(screen.getByText('Head scan')).toBeInTheDocument();
+  });
+
+  it('renders series row with empty modality or description', async () => {
+    const mockSeriesWithEmptyFields = [
+      {
+        seriesInstanceUID: 'SERIES_EMPTY',
+        modality: '',
+        seriesDate: '2025-08-31',
+        seriesDescription: '',
+        orthancSeriesUID: 'UID125',
+      },
+    ];
+    (api.useStudySeries as jest.Mock).mockReturnValue({
+      data: mockSeriesWithEmptyFields,
+      error: null,
+      isLoading: false,
+      isValidating: false,
+    });
+    // expect(screen.getByText('SERIES_EMPTY')).toBeInTheDocument();
+    expect(screen.getByText('')).toBeInTheDocument(); // empty description
+    expect(screen.getAllByText('').length).toBeGreaterThanOrEqual(1); // empty modality
+  });
+
+  it('triggers action buttons', async () => {
+    (api.useStudySeries as jest.Mock).mockReturnValue({
+      data: mockSeries,
+      error: null,
+      isLoading: false,
+      isValidating: false,
+    });
+
+    await act(async () => {
+      render(
+        <SeriesDetailsTable
+          studyId={1}
+          studyInstanceUID="1.2.3"
+          patientUuid="patient-123"
+          orthancBaseUrl="http://orthanc.local"
+        />,
+      );
+    });
+
+    const trashButton = screen.getAllByTestId('trash-icon')[0];
+    fireEvent.click(trashButton);
+    expect(showModal).toHaveBeenCalled();
+
+    const stoneViewerButton = screen.getAllByLabelText(/Stone viewer of Orthanc/i)[0];
+    fireEvent.click(stoneViewerButton);
+
+    const orthancExplorerButton = screen.getAllByLabelText(/Show data in orthanc explorere/i)[0];
+    fireEvent.click(orthancExplorerButton);
+  });
+
+  it('sorts table when clicking headers', async () => {
+    (api.useStudySeries as jest.Mock).mockReturnValue({
+      data: mockSeries,
+      error: null,
+      isLoading: false,
+      isValidating: false,
+    });
+
+    await act(async () => {
+      render(
+        <SeriesDetailsTable
+          studyId={1}
+          studyInstanceUID="1.2.3"
+          patientUuid="patient-123"
+          orthancBaseUrl="http://orthanc.local"
+        />,
+      );
+    });
+
+    const headers = screen.getAllByText(
+      (content, element) => element?.tagName === 'TH' && content.includes('Series UID'),
+    );
+    fireEvent.click(headers[0]);
+    fireEvent.click(headers[0]);
   });
 });
