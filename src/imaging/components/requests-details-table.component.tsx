@@ -17,7 +17,7 @@ import {
   compare,
   PatientChartPagination,
   // launchPatientWorkspace,
-  useLaunchWorkspaceRequiringVisit,
+  useLaunchWorkspaceRequiringVisit as launchWorkspaceRequiringVisit,
   EmptyState,
 } from '@openmrs/esm-patient-common-lib';
 
@@ -57,7 +57,7 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
   const shouldOnClickBeCalled = useRef(true);
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
-  // const launchAddNewRequestWorkspace = useCallback(() => useLaunchWorkspaceRequiringVisit(addNewRequestWorkspace), []);
+  const launchAddNewRequestWorkspace = useCallback(() => launchWorkspaceRequiringVisit(addNewRequestWorkspace), []);
 
   const launchDeleteRequestDialog = (requestId: number) => {
     const dispose = showModal(requestDeleteConfirmationDialog, {
@@ -170,7 +170,7 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
               kind="ghost"
               renderIcon={(props) => <AddIcon size={16} {...props} />}
               iconDescription={t('add', 'Add')}
-              onClick={() => useLaunchWorkspaceRequiringVisit(addNewRequestWorkspace)}
+              onClick={launchAddNewRequestWorkspace}
             >
               {t('Add', 'Add')}
             </Button>

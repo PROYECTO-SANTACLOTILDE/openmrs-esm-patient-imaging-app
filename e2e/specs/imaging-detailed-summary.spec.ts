@@ -154,7 +154,7 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
     const worklistBtn = page.getByRole('button', { name: /Record No worklist found/i });
     await worklistBtn.click();
 
-    await expect(page.locator('#newRequestForm')).toBeVisible();
+    await expect(page.locator('#newRequestForm').first()).toBeVisible();
 
     await expect(page.getByPlaceholder(/Select an Orthanc server/i)).toBeVisible();
     await expect(page.getByPlaceholder(/Select the request priority/i)).toBeVisible();
