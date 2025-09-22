@@ -142,7 +142,6 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
     const form = page.locator('#newRequestForm');
     await expect(form).toBeVisible({ timeout: 10000 });
 
-    // Click Save and Close (workspace won't close because of override)
     await page.getByRole('button', { name: /Save and close/i }).click();
 
     // Assert validation messages are visible
