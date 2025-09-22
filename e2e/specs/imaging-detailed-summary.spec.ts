@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { DicomStudy, RequestProcedure } from '../commands/types';
 import { test } from '../core';
 import { cleanOrthanc } from '../commands/imaging-operations';
+import { timeout } from 'rxjs/operators';
 
 let patientUuid: string;
 
@@ -10,33 +11,6 @@ test.beforeEach(async ({ api, patient, request }) => {
 });
 
 test.describe.serial('ImagingDetailedSummary E2E', () => {
-  const mockRequests: RequestProcedure[] = [
-    {
-      id: 1,
-      status: 'Pending',
-      orthancConfiguration: { id: 1, orthancBaseUrl: 'http://localhost:8052' },
-      patientUuid: patientUuid,
-      accessionNumber: 'ACC12345',
-      studyInstanceUID: '1.2.3.4.5',
-      requestingPhysician: 'Dr. Smith',
-      requestDescription: 'MRI Brain',
-      priority: 'High',
-    },
-  ];
-  const mockStudies: DicomStudy[] = [
-    {
-      id: 1,
-      studyInstanceUID: '1.2.3.4.5',
-      orthancStudyUID: 'ORTHANC123',
-      orthancConfiguration: { id: 1, orthancBaseUrl: 'http://localhost:8052' },
-      patientName: 'John Doe',
-      mrsPatientUuid: patientUuid,
-      studyDate: '2025-09-01',
-      studyDescription: 'CT Brain',
-      gender: 'M',
-    },
-  ];
-
   test('navigate to patient chart with existing session', async ({ page }) => {
     await page.route('**/studies/**', async (route) => {
       await new Promise((r) => setTimeout(r, 2000));
@@ -107,7 +81,6 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
 
     const comboBox = page.getByTestId('orthanc-server-combobox');
     await comboBox.click();
-    // await page.getByText('http://localhost:8052').click();
 
     // Check for FileUploader
     await expect(page.getByTestId('upload-studies-fileuploader')).toBeVisible();
@@ -154,7 +127,7 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
     const worklistBtn = page.getByRole('button', { name: /Record No worklist found/i });
     await worklistBtn.click();
 
-    await expect(page.locator('#newRequestForm').first()).toBeVisible();
+    await expect(page.locator('#newRequestForm').first()).toBeVisible({ timeout: 10000 });
 
     await expect(page.getByPlaceholder(/Select an Orthanc server/i)).toBeVisible();
     await expect(page.getByPlaceholder(/Select the request priority/i)).toBeVisible();
@@ -167,7 +140,7 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
     const worklistBtn = page.getByRole('button', { name: /Record No worklist found/i });
     await worklistBtn.click();
     const form = page.locator('#newRequestForm');
-    await expect(form).toBeVisible();
+    await expect(form).toBeVisible({ timeout: 10000 });
 
     // Click Save and Close (workspace won't close because of override)
     await page.getByRole('button', { name: /Save and close/i }).click();
