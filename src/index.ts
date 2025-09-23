@@ -4,7 +4,7 @@ import { dashboardMeta } from './dashboard.meta';
 import { configSchema } from './config-schema';
 import ImagingDetailedSummaryComponent from './imaging/imaging-summary/imaging-detailed-summary.component';
 
-const moduleName = '@zhaosadre/esm-patient-imaging-app';
+const moduleName = '@zhaosadre/openmrs-esm-patient-imaging-app';
 
 const options = {
   featureName: 'patient-imaging',
