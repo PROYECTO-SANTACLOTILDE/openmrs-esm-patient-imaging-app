@@ -14,7 +14,7 @@ import {
 import { compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patient-common-lib';
 
 import { useTranslation } from 'react-i18next';
-import { getBrowserUrl, OrthancConfiguration, type Series } from '../../types';
+import { getBrowserUrl, type OrthancConfiguration, type Series } from '../../types';
 import stoneview from '../../assets/stoneViewer.png';
 import orthancExplorer from '../../assets/orthanc.png';
 import { useLayoutType, usePagination, TrashCanIcon, showModal } from '@openmrs/esm-framework';
@@ -53,8 +53,6 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
   const isTablet = layout === 'tablet';
   const shouldOnClickBeCalled = useRef(true);
   const seriesMap = useRef<Map<string, Series>>(new Map());
-
-  console.log('==============', orthancConfig);
 
   results?.forEach((series) => {
     seriesMap.current.set(String(series.seriesInstanceUID), series);

@@ -21,7 +21,7 @@ import orthancExplorer from '../../assets/orthanc.png';
 import styles from './details-table.scss';
 import { instancePreviewDialog, instancesCount } from '../constants';
 import { buildURL } from '../utils/help';
-import { getBrowserUrl, OrthancConfiguration } from '../../types';
+import { getBrowserUrl, type OrthancConfiguration } from '../../types';
 
 export interface InstancesDetailsTableProps {
   studyId: number;
