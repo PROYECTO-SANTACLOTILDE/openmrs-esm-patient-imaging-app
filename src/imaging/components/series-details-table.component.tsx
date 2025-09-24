@@ -14,7 +14,7 @@ import {
 import { compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patient-common-lib';
 
 import { useTranslation } from 'react-i18next';
-import { type Series } from '../../types';
+import { getBrowserUrl, OrthancConfiguration, type Series } from '../../types';
 import stoneview from '../../assets/stoneViewer.png';
 import orthancExplorer from '../../assets/orthanc.png';
 import { useLayoutType, usePagination, TrashCanIcon, showModal } from '@openmrs/esm-framework';
@@ -28,14 +28,14 @@ export interface SeriesDetailsTableProps {
   studyId: number;
   studyInstanceUID: string;
   patientUuid: string;
-  orthancBaseUrl: string;
+  orthancConfig: OrthancConfiguration;
 }
 
 const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
   studyId,
   studyInstanceUID,
   patientUuid,
-  orthancBaseUrl,
+  orthancConfig,
 }) => {
   const {
     data: seriesList,
@@ -53,6 +53,8 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
   const isTablet = layout === 'tablet';
   const shouldOnClickBeCalled = useRef(true);
   const seriesMap = useRef<Map<string, Series>>(new Map());
+
+  console.log('==============', orthancConfig);
 
   results?.forEach((series) => {
     seriesMap.current.set(String(series.seriesInstanceUID), series);
@@ -106,7 +108,7 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
             size={isTablet ? 'lg' : 'sm'}
             label={t('stoneviewer', 'Stone viewer of Orthanc')}
             onClick={() =>
-              (window.location.href = buildURL(orthancBaseUrl, 'stone-webviewer/index.html', [
+              (window.location.href = buildURL(getBrowserUrl(orthancConfig), 'stone-webviewer/index.html', [
                 { code: 'study', value: studyInstanceUID },
                 { code: 'series', value: series.seriesInstanceUID },
               ]))
@@ -120,7 +122,7 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
             size={isTablet ? 'lg' : 'sm'}
             label={t('orthancExplorer2', 'Show data in orthanc explorere')}
             onClick={() =>
-              (window.location.href = `${orthancBaseUrl}ui/app/#/filtered-studies?StudyInstanceUID=${studyInstanceUID}&expand=series`)
+              (window.location.href = `${getBrowserUrl(orthancConfig)}/ui/app/#/filtered-studies?StudyInstanceUID=${studyInstanceUID}&expand=series`)
             }
           >
             <img className="orthanc-img" src={orthancExplorer} style={{ width: 26, height: 26, marginTop: 0 }}></img>
@@ -195,7 +197,7 @@ const SeriesDetailsTable: React.FC<SeriesDetailsTableProps> = ({
                                 studyId={studyId}
                                 studyInstanceUID={studyInstanceUID}
                                 seriesInstanceUID={seriesData.seriesInstanceUID}
-                                orthancBaseUrl={orthancBaseUrl}
+                                orthancConfig={orthancConfig}
                                 seriesModality={seriesData.modality}
                               />
                             </div>

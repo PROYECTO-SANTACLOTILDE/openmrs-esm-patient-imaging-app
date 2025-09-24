@@ -20,12 +20,14 @@ import preview from '../../assets/preview.png';
 import orthancExplorer from '../../assets/orthanc.png';
 import styles from './details-table.scss';
 import { instancePreviewDialog, instancesCount } from '../constants';
+import { buildURL } from '../utils/help';
+import { getBrowserUrl, OrthancConfiguration } from '../../types';
 
 export interface InstancesDetailsTableProps {
   studyId: number;
   studyInstanceUID: string;
   seriesInstanceUID: string;
-  orthancBaseUrl: string;
+  orthancConfig: OrthancConfiguration;
   seriesModality: string;
 }
 
@@ -33,7 +35,7 @@ const InstancesDetailsTable: React.FC<InstancesDetailsTableProps> = ({
   studyId,
   studyInstanceUID,
   seriesInstanceUID,
-  orthancBaseUrl,
+  orthancConfig,
   seriesModality,
 }) => {
   const {
@@ -101,8 +103,14 @@ const InstancesDetailsTable: React.FC<InstancesDetailsTableProps> = ({
                 align="left"
                 size={isTablet ? 'lg' : 'sm'}
                 label={t('instanceViewInOrthanc', 'Instance view in Orthanc')}
-                onClick={() =>
-                  (window.location.href = `${orthancBaseUrl}instances/${instance.orthancInstanceUID}/preview`)
+                onClick={
+                  () =>
+                    (window.location.href = buildURL(
+                      getBrowserUrl(orthancConfig),
+                      `instances/${instance.orthancInstanceUID}/preview`,
+                      [],
+                    ))
+                  // `${orthancBaseUrl}instances/${instance.orthancInstanceUID}/preview`)
                 }
               >
                 <img className="orthanc-img" src={preview} style={{ width: 23, height: 23 }}></img>
@@ -115,7 +123,7 @@ const InstancesDetailsTable: React.FC<InstancesDetailsTableProps> = ({
             size={isTablet ? 'lg' : 'sm'}
             label={t('orthancExplorer2', 'Show data in orthanc explorere')}
             onClick={() =>
-              (window.location.href = `${orthancBaseUrl}/ui/app/#/filtered-studies?StudyInstanceUID=${studyInstanceUID}&expand=series`)
+              (window.location.href = `${getBrowserUrl(orthancConfig)}/ui/app/#/filtered-studies?StudyInstanceUID=${studyInstanceUID}&expand=series`)
             }
           >
             <img className="orthanc-img" src={orthancExplorer} style={{ width: 26, height: 26, marginTop: 0 }}></img>

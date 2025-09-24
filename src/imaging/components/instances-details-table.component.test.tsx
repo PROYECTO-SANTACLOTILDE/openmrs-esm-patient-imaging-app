@@ -34,11 +34,17 @@ jest.mock('react-i18next', () => ({
 describe('InstancesDetailsTable', () => {
   const orignalError = console.error;
 
+  const mockConfig = {
+    id: 1,
+    orthancBaseUrl: 'http://orthanc.local',
+    orthancProxyUrl: 'http://orthanc.proxy',
+  };
+
   const defaultProps: InstancesDetailsTableProps = {
     studyId: 1,
     studyInstanceUID: '1.2.3',
     seriesInstanceUID: '1.2.3.4.5',
-    orthancBaseUrl: 'http://orthanc-server',
+    orthancConfig: mockConfig,
     seriesModality: 'CT',
   };
 

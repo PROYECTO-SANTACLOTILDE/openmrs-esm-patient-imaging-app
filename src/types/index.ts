@@ -1,6 +1,5 @@
-
 export interface DicomStudy {
-  id: number,
+  id: number;
   studyInstanceUID: string;
   orthancStudyUID: string;
   orthancConfiguration: OrthancConfiguration;
@@ -28,60 +27,64 @@ export interface OrthancConfiguration {
   orthancProxyUrl?: string;
 }
 
+export function getBrowserUrl(oc: OrthancConfiguration): string {
+  return oc.orthancProxyUrl ? oc.orthancProxyUrl : oc.orthancBaseUrl;
+}
+
 export interface Instance {
   sopInstanceUID: string;
   orthancInstanceUID: string;
   instanceNumber: string;
   imagePositionPatient: string;
   numberOfFrames: string;
-  orthancConfiguration: OrthancConfiguration,
+  orthancConfiguration: OrthancConfiguration;
 }
 
 export interface CreateRequestProcedure {
-  orthancConfiguration: OrthancConfiguration,
-  patientUuid: string,
-  accessionNumber: string,
-  requestingPhysician: string,
-  requestDescription: string,
-  priority: string
+  orthancConfiguration: OrthancConfiguration;
+  patientUuid: string;
+  accessionNumber: string;
+  requestingPhysician: string;
+  requestDescription: string;
+  priority: string;
 }
 
 export interface RequestProcedure {
-  id: number,
-  status: string,
-  orthancConfiguration: OrthancConfiguration,
-  patientUuid: string,
-  accessionNumber: string,
-  studyInstanceUID?: string,
-  requestingPhysician: string,
-  requestDescription: string,
-  priority: string
+  id: number;
+  status: string;
+  orthancConfiguration: OrthancConfiguration;
+  patientUuid: string;
+  accessionNumber: string;
+  studyInstanceUID?: string;
+  requestingPhysician: string;
+  requestDescription: string;
+  priority: string;
 }
 
 export interface CreateRequestProcedureStep {
-  requestId: number,
-  modality: string,
-  aetTitle: string,
-  scheduledReferringPhysician: string,
-  requestedProcedureDescription: string,
-  stepStartDate: string,
-  stepStartTime: string,
-  stationName?: string,
-  procedureStepLocation?: string
+  requestId: number;
+  modality: string;
+  aetTitle: string;
+  scheduledReferringPhysician: string;
+  requestedProcedureDescription: string;
+  stepStartDate: string;
+  stepStartTime: string;
+  stationName?: string;
+  procedureStepLocation?: string;
 }
 
 export interface RequestProcedureStep {
-  id: number,
-  requestProcedureId: number,
-  modality: string,
-  aetTitle: string,
-  scheduledReferringPhysician: string,
-  requestedProcedureDescription: string,
-  stepStartDate: string,
-  stepStartTime: string,
-  performedProcedureStepStatus: string,
-  stationName?: string,
-  procedureStepLocation?: string
+  id: number;
+  requestProcedureId: number;
+  modality: string;
+  aetTitle: string;
+  scheduledReferringPhysician: string;
+  requestedProcedureDescription: string;
+  stepStartDate: string;
+  stepStartTime: string;
+  performedProcedureStepStatus: string;
+  stationName?: string;
+  procedureStepLocation?: string;
 }
 
 export enum StudyStatus {
@@ -90,27 +93,27 @@ export enum StudyStatus {
   CANCELLED = 'cancelled',
   ENTERED_IN_ERROR = 'entered-in-error',
   UNKNOWN = 'unknown',
-  INACTIVE = 'inactive'
+  INACTIVE = 'inactive',
 }
 
 export const modalityOptions = [
-  {code:"CR", label: "CR (Computed Radiography)"},
-  {code:"CT", label: "CT (Computed Tomography)"},
-  {code:"MR", label: "MR (Magnetic Resonance Imaging)"},
-  {code:"US", label:"US (Ultrasound)"},
-  {code:"XA", label: "XA (X-ray Angiography)"},
-  {code:"DX", lable: "DX (Digital Radiography)"},
-  {code:"MG", label: "MG (Mammography)"},
-  {code:"PT", label: "NM (Nuclear Medicine)"},
-  {code:"PT", label: "PT (Positron Emission Tomography)"},
-  {code:"RF", label: "RF (Radio Fluoroscopy)"},
-  {code:"SC", label: "SC (Secondary Capture)"},
-  {code:"XC", label: "XC (External-camera Photography)"},
-  {code:"OP", lable: "OP (Ophthalmic Photography)"},
-  {code:"PR", label: "PR (Presentation State)"},
-  {code:"SR", label: "SR (Structured Report)"},
-  {code:"RT", label: "RT (Radiotherapy)"}
-]
+  { code: 'CR', label: 'CR (Computed Radiography)' },
+  { code: 'CT', label: 'CT (Computed Tomography)' },
+  { code: 'MR', label: 'MR (Magnetic Resonance Imaging)' },
+  { code: 'US', label: 'US (Ultrasound)' },
+  { code: 'XA', label: 'XA (X-ray Angiography)' },
+  { code: 'DX', lable: 'DX (Digital Radiography)' },
+  { code: 'MG', label: 'MG (Mammography)' },
+  { code: 'PT', label: 'NM (Nuclear Medicine)' },
+  { code: 'PT', label: 'PT (Positron Emission Tomography)' },
+  { code: 'RF', label: 'RF (Radio Fluoroscopy)' },
+  { code: 'SC', label: 'SC (Secondary Capture)' },
+  { code: 'XC', label: 'XC (External-camera Photography)' },
+  { code: 'OP', lable: 'OP (Ophthalmic Photography)' },
+  { code: 'PR', label: 'PR (Presentation State)' },
+  { code: 'SR', label: 'SR (Structured Report)' },
+  { code: 'RT', label: 'RT (Radiotherapy)' },
+];
 
 export interface StudiesWithScores {
   studies: Array<DicomStudy>;

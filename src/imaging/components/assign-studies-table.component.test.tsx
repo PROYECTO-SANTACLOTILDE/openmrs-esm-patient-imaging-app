@@ -38,6 +38,12 @@ describe('AssignStudiesTable', () => {
     jest.clearAllMocks();
   });
 
+  const mockConfig = {
+    id: 1,
+    orthancBaseUrl: 'http://orthanc.local',
+    orthancProxyUrl: '',
+  };
+
   const defaultProps: AssignStudiesTableProps = {
     patientUuid: '1234-5678-9012-3456',
     assignStudyFunction: jest.fn(),
@@ -50,10 +56,7 @@ describe('AssignStudiesTable', () => {
           studyDate: '2023-01-01',
           studyDescription: 'Description of study 1',
           orthancStudyUID: 'orthancUID_1.2.3',
-          orthancConfiguration: {
-            id: 1,
-            orthancBaseUrl: 'http://orthanc-server',
-          },
+          orthancConfiguration: mockConfig,
           mrsPatientUuid: null,
         },
         {
@@ -63,10 +66,7 @@ describe('AssignStudiesTable', () => {
           studyDate: '2023-02-15',
           studyDescription: 'Description of study 2',
           orthancStudyUID: 'orthancUID_4.5.6',
-          orthancConfiguration: {
-            id: 1,
-            orthancBaseUrl: 'http://orthanc-server',
-          },
+          orthancConfiguration: mockConfig,
           mrsPatientUuid: '1234-5678-9012-3456', // assigned study
         },
       ],

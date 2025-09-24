@@ -27,6 +27,12 @@ const mockSeries = [
   },
 ];
 
+const mockConfig = {
+  id: 1,
+  orthancBaseUrl: 'http://orthanc.local',
+  orthancProxyUrl: '',
+};
+
 jest.mock('../../api');
 jest.mock('@openmrs/esm-framework', () => ({
   useLayoutType: jest.fn(() => 'desktop'),
@@ -98,7 +104,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID="1.2.3"
           patientUuid="patient-123"
-          orthancBaseUrl="http://orthanc.local"
+          orthancConfig={mockConfig}
         />,
       );
     });
@@ -120,7 +126,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID="1.2.3"
           patientUuid="patient-123"
-          orthancBaseUrl="http://orthanc.local"
+          orthancConfig={mockConfig}
         />,
       );
     });
@@ -161,7 +167,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID="1.2.3"
           patientUuid="patient-123"
-          orthancBaseUrl="http://orthanc.local"
+          orthancConfig={mockConfig}
         />,
       ),
     );
@@ -186,7 +192,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID={'1.2.3'}
           patientUuid={'patient-123'}
-          orthancBaseUrl={'http://orthanc.local'}
+          orthancConfig={mockConfig}
         />,
       ) as any;
     });
@@ -237,7 +243,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID="1.2.3"
           patientUuid="patient-123"
-          orthancBaseUrl="http://orthanc.local"
+          orthancConfig={mockConfig}
         />,
       );
     });
@@ -267,7 +273,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID="1.2.3"
           patientUuid="patient-123"
-          orthancBaseUrl="http://orthanc.local"
+          orthancConfig={mockConfig}
         />,
       );
     });
@@ -303,7 +309,7 @@ describe('SeriesDetailsTable', () => {
           studyId={1}
           studyInstanceUID="1.2.3"
           patientUuid="patient-123"
-          orthancBaseUrl="http://orthanc.local"
+          orthancConfig={mockConfig}
         />,
       );
     });

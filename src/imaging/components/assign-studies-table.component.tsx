@@ -14,7 +14,7 @@ import { compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patien
 import { useLayoutType, usePagination } from '@openmrs/esm-framework';
 
 import { useTranslation } from 'react-i18next';
-import type { DicomStudy, StudiesWithScores } from '../../types';
+import { getBrowserUrl, type DicomStudy, type StudiesWithScores } from '../../types';
 import { studiesCount } from '../constants';
 import stoneview from '../../assets/stoneViewer.png';
 import ohifview from '../../assets/ohifViewer.png';
@@ -72,7 +72,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
     { key: 'patientName', header: t('patientName', 'Patient name'), isSortable: true },
     { key: 'studyDate', header: t('studyDate', 'Study date'), isSortable: true },
     { key: 'studyDescription', header: t('description', 'description'), isSortable: false },
-    { key: 'orthancConfiguration', header: t('orthancBaseUrl', 'The configured Orthanc Url'), isSortable: true },
+    { key: 'orthancBaseUrl', header: t('orthancBaseUrl', 'The configured Orthanc Url'), isSortable: true },
     { key: 'action', header: t('action', 'Action') },
   ].filter(Boolean);
 
@@ -106,7 +106,8 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
       </div>
     ),
     studyDescription: study.studyDescription,
-    orthancConfiguration: study.orthancConfiguration.orthancBaseUrl,
+    orthancConfiguration: study.orthancConfiguration,
+    orthancBaseUrl: study.orthancConfiguration.orthancBaseUrl,
     action: {
       content: (
         <div className="flex gap-1">
@@ -117,7 +118,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
             label={t('stoneviewer', 'Stone viewer of Orthanc')}
             onClick={() =>
               (window.location.href = buildURL(
-                study.orthancConfiguration.orthancBaseUrl,
+                getBrowserUrl(study.orthancConfiguration),
                 '/stone-webviewer/index.html',
                 [{ code: 'study', value: study.studyInstanceUID }],
               ))
@@ -131,7 +132,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
             size={isTablet ? 'lg' : 'sm'}
             label={t('ohifviewer', 'Ohif viewer')}
             onClick={() =>
-              (window.location.href = buildURL(study.orthancConfiguration.orthancBaseUrl, '/ohif/viewer', [
+              (window.location.href = buildURL(getBrowserUrl(study.orthancConfiguration), '/ohif/viewer', [
                 { code: 'StudyInstanceUIDs', value: study.studyInstanceUID },
               ]))
             }
@@ -204,7 +205,7 @@ const AssignStudiesTable: React.FC<AssignStudiesTableProps> = ({
                                     ''
                                   }
                                   patientUuid={patientUuid}
-                                  orthancBaseUrl={
+                                  orthancConfig={
                                     row.cells.find((cell) => cell.id === 'orthancConfiguration')?.value || ''
                                   }
                                 />

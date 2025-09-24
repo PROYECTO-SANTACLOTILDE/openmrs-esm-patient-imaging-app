@@ -15,7 +15,7 @@ import { compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patien
 import { showModal, TrashCanIcon, useLayoutType, usePagination } from '@openmrs/esm-framework';
 
 import { useTranslation } from 'react-i18next';
-import { type DicomStudy } from '../../types';
+import { getBrowserUrl, type DicomStudy } from '../../types';
 import stoneview from '../../assets/stoneViewer.png';
 import ohifview from '../../assets/ohifViewer.png';
 import orthancExplorer from '../../assets/orthanc.png';
@@ -114,7 +114,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
             label={t('stoneviewer', 'Stone viewer of Orthanc')}
             onClick={() =>
               (window.location.href = buildURL(
-                study.orthancConfiguration.orthancBaseUrl,
+                getBrowserUrl(study.orthancConfiguration),
                 '/stone-webviewer/index.html',
                 [{ code: 'study', value: study.studyInstanceUID }],
               ))
@@ -128,7 +128,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
             size={isTablet ? 'lg' : 'sm'}
             label={t('ohifviewer', 'Ohif viewer')}
             onClick={() =>
-              (window.location.href = buildURL(study.orthancConfiguration.orthancBaseUrl, '/ohif/viewer', [
+              (window.location.href = buildURL(getBrowserUrl(study.orthancConfiguration), '/ohif/viewer', [
                 { code: 'StudyInstanceUIDs', value: study.studyInstanceUID },
               ]))
             }
@@ -140,8 +140,18 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
             align="left"
             size={isTablet ? 'lg' : 'sm'}
             label={t('orthancExplorer2', 'Show data in orthanc explorer')}
-            onClick={() =>
-              (window.location.href = `${study.orthancConfiguration.orthancBaseUrl}/ui/app/#/filtered-studies?StudyInstanceUID=${study.studyInstanceUID}&expand=series`)
+            onClick={
+              () =>
+                (window.location.href = buildURL(
+                  getBrowserUrl(study.orthancConfiguration),
+                  '/ui/app/#/filtered-studies',
+                  [
+                    { code: 'StudyInstanceUID', value: study.studyInstanceUID },
+                    { code: 'expand', value: 'series' },
+                  ],
+                ))
+
+              // `${getBrowserUrl(study.orthancConfiguration)}/ui/app/#/filtered-studies?StudyInstanceUID=${study.studyInstanceUID}&expand=series`)
             }
           >
             <img className="orthanc-img" src={orthancExplorer} style={{ width: 26, height: 26, marginTop: 0 }}></img>
@@ -210,7 +220,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
                                   studyId={studyData.id}
                                   studyInstanceUID={studyData.studyInstanceUID}
                                   patientUuid={patientUuid}
-                                  orthancBaseUrl={studyData.orthancConfiguration.orthancBaseUrl}
+                                  orthancConfig={studyData.orthancConfiguration}
                                 />
                               </div>
                             </TableCell>
