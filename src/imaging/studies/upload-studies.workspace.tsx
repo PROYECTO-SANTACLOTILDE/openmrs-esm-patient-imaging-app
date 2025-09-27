@@ -10,7 +10,7 @@ import {
 import { type DefaultPatientWorkspaceProps } from '@openmrs/esm-patient-common-lib';
 import { uploadStudies, useOrthancConfigurations } from '../../api';
 import { Button, ComboBox, Form, Stack, Row } from '@carbon/react';
-import { type OrthancConfiguration } from '../../types';
+import { getBrowserUrl, type OrthancConfiguration } from '../../types';
 import { FileUploader } from '@carbon/react';
 import styles from './studies.scss';
 import { maxUploadImageDataSize } from '../constants';
