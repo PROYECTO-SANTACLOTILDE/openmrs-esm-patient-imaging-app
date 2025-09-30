@@ -40,14 +40,14 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
     <div>
       <div style={{ marginBottom: '2rem' }}>
         <CardHeader title={headerTitle}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '1rem', width: '50%' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', gap: '1rem', width: '60%' }}>
             <Button
               kind="ghost"
               renderIcon={(props) => <AddIcon size={16} {...props} />}
               iconDescription={t('linkStudies', 'Studies')}
               onClick={launchLinkStudiesWorkspace}
             >
-              {t('linkStudie', 'Link studies')}
+              <strong>{t('linkStudie', 'Link studies')}</strong>
             </Button>
             <Button
               kind="ghost"
@@ -55,7 +55,7 @@ export default function ImagingDetailedSummary({ patientUuid }: ImagingDetailedS
               iconDescription={t('upload', 'Upload')}
               onClick={launchUploadStudiesWorkspace}
             >
-              {t('upload', 'Upload')}
+              <strong>{t('upload', 'Upload')}</strong>
             </Button>
           </div>
         </CardHeader>

@@ -12,14 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@carbon/react';
-import {
-  CardHeader,
-  compare,
-  PatientChartPagination,
-  // launchPatientWorkspace,
-  useLaunchWorkspaceRequiringVisit as launchWorkspaceRequiringVisit,
-  EmptyState,
-} from '@openmrs/esm-patient-common-lib';
+import { CardHeader, compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patient-common-lib';
 
 import {
   AddIcon,
@@ -35,8 +28,8 @@ import { type RequestProcedure } from '../../types';
 import {
   addNewProcedureStepWorkspace,
   addNewRequestWorkspace,
-  requestCount,
   requestDeleteConfirmationDialog,
+  requestCount,
 } from '../constants';
 import ProcedureStepTable from './procedureStep-details-table.component';
 import styles from './details-table.scss';
@@ -52,12 +45,13 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
   const { t } = useTranslation();
   const displayText = t('requestProcedureEmptyState', 'No requests found');
   const headerTitle = t('requestProcedure', 'RequestProcedure');
-  const { results, goTo, currentPage } = usePagination(requests, requestCount);
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [priorityFilter, setPriorityFilter] = useState<string>('');
   const [expandedRows, setExpandedRows] = useState({});
   const shouldOnClickBeCalled = useRef(true);
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
-  const launchAddNewRequestWorkspace = useCallback(() => launchWorkspaceRequiringVisit(addNewRequestWorkspace), []);
+  const launchAddNewRequestWorkspace = useCallback(() => launchWorkspace(addNewRequestWorkspace), []);
 
   const launchDeleteRequestDialog = (requestId: number) => {
     const dispose = showModal(requestDeleteConfirmationDialog, {
@@ -66,6 +60,16 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
       patientUuid,
     });
   };
+
+  const filteredRequests = useMemo(() => {
+    return requests.filter((req) => {
+      const matchesStatus = statusFilter ? req.status.toLowerCase().includes(statusFilter.toLowerCase()) : true;
+      const matchesPriority = priorityFilter ? req.priority.toLowerCase().includes(priorityFilter.toLowerCase()) : true;
+      return matchesStatus && matchesPriority;
+    });
+  }, [requests, statusFilter, priorityFilter]);
+
+  const { results, goTo, currentPage } = usePagination(filteredRequests, requestCount);
 
   const tableHeaders = useMemo(
     () => [
@@ -172,8 +176,25 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
               iconDescription={t('add', 'Add')}
               onClick={launchAddNewRequestWorkspace}
             >
-              {t('Add', 'Add')}
+              <strong>{t('Add', 'Add')}</strong>
             </Button>
+          </div>
+          <div className={styles.filterContainer}>
+            <input
+              style={{ marginRight: '20px' }}
+              type="text"
+              placeholder={t('filterByStatus', 'Filter by status')}
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className={styles.filterInput}
+            />
+            <input
+              type="text"
+              placeholder={t('filterByPriority', 'Filter by priority')}
+              value={priorityFilter}
+              onChange={(e) => setPriorityFilter(e.target.value)}
+              className={styles.filterInput}
+            />
           </div>
         </CardHeader>
         <DataTable

@@ -9,8 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  InlineLoading,
 } from '@carbon/react';
-import { compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patient-common-lib';
+import { compare, PatientChartPagination, EmptyState, CardHeader } from '@openmrs/esm-patient-common-lib';
 
 import { showModal, TrashCanIcon, useLayoutType, usePagination } from '@openmrs/esm-framework';
 
@@ -40,16 +41,13 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
   const { t } = useTranslation();
   const displayText = t('studiesNoFoundMessage', 'No studies found');
   const headerTitle = t('Studies', 'Studies');
-  const { results, goTo, currentPage } = usePagination(studies ?? [], studiesCount);
+  const [studyDateFilter, setStudyDateFilter] = useState<string>('');
+  const [studyDescFilter, setStudyDescFilter] = useState<string>('');
   const [expandedRows, setExpandedRows] = useState({});
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const shouldOnClickBeCalled = useRef(true);
   const studyMap = useRef<Map<string, DicomStudy>>(new Map());
-
-  results?.forEach((study) => {
-    studyMap.current.set(String(study.id), study);
-  });
 
   const launchDeleteStudyDialog = (studyId: number) => {
     const dispose = showModal(studyDeleteConfirmationDialog, {
@@ -59,16 +57,35 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
     });
   };
 
+  const filterStudies = useMemo(() => {
+    return studies.filter((study) => {
+      const matchStudyDate = studyDateFilter
+        ? study.studyDate.toLowerCase().includes(studyDateFilter.toLowerCase())
+        : true;
+
+      const matchStudyDesc = studyDescFilter
+        ? study.studyDescription.toLowerCase().includes(studyDescFilter.toLowerCase())
+        : true;
+
+      return matchStudyDate && matchStudyDesc;
+    });
+  }, [studies, studyDateFilter, studyDescFilter]);
+
+  const { results, goTo, currentPage } = usePagination(filterStudies, studiesCount);
+
+  studies?.forEach((study) => {
+    studyMap.current.set(String(study.id), study);
+  });
+
   const tableHeaders = useMemo(
-    () =>
-      [
-        { key: 'studyInstanceUID', header: t('studyInstanceUID', 'Study instance UID'), isSortable: true },
-        { key: 'patientName', header: t('patientName', 'Patient name'), isSortable: true },
-        { key: 'studyDate', header: t('studyDate', 'Study date'), isSortable: true },
-        { key: 'studyDescription', header: t('description', 'description'), isSortable: true },
-        { key: 'orthancConfiguration', header: t('orthancBaseUrl', 'The configured Orthanc Url'), isSortable: true },
-        { key: 'action', header: t('action', 'Action'), isSortable: false },
-      ].filter(Boolean),
+    () => [
+      { key: 'studyInstanceUID', header: t('studyInstanceUID', 'Study instance UID'), isSortable: true },
+      { key: 'patientName', header: t('patientName', 'Patient name'), isSortable: true },
+      { key: 'studyDate', header: t('studyDate', 'Study date'), isSortable: true },
+      { key: 'studyDescription', header: t('description', 'description'), isSortable: true },
+      { key: 'orthancConfiguration', header: t('orthancBaseUrl', 'The configured Orthanc Url'), isSortable: true },
+      { key: 'action', header: t('action', 'Action'), isSortable: false },
+    ],
     [t],
   );
 
@@ -170,6 +187,26 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
   if (studies && studies?.length) {
     return (
       <div className={styles.widgetCard}>
+        <CardHeader title={headerTitle}>
+          <span>{isValidating ? <InlineLoading /> : null}</span>
+          <div className={styles.filterContainer}>
+            <input
+              style={{ marginRight: '20px' }}
+              type="text"
+              placeholder={t('filterByStudyDate', 'Filter by study date')}
+              value={studyDateFilter}
+              onChange={(e) => setStudyDateFilter(e.target.value)}
+              className={styles.filterInput}
+            />
+            <input
+              type="text"
+              placeholder={t('filterByStudyDescription', 'Filter by study description')}
+              value={studyDescFilter}
+              onChange={(e) => setStudyDescFilter(e.target.value)}
+              className={styles.filterInput}
+            />
+          </div>
+        </CardHeader>
         <DataTable
           rows={tableRows}
           headers={tableHeaders}

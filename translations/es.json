@@ -113,5 +113,9 @@
   "selectPriority": "Select the request priority",
   "saveAndClose": "Save and Close",
   "chooseFiles": "Choose Files",
-  "accessNumber": "Accession Number"
+  "accessNumber": "Accession Number",
+  "filterByStatus": "Filter by status",
+  "filterByPriority": "Filter by priority",
+  "filterByStudyDate": "Filter by study date",
+  "filterByStudyDescription": "Filter by study description"
 }

@@ -113,5 +113,9 @@
   "requestDescription": "Request procedure description",
   "selectPriority": "Select the request priority",
   "saveAndClose": "Save and Close",
-  "chooseFiles": "Choose Files"
+  "chooseFiles": "Choose Files",
+  "filterByStatus": "Filter by status",
+  "filterByPriority": "Filter by priority",
+  "filterByStudyDate": "Filter by study date",
+  "filterByStudyDescription": "Filter by study description"
 }
