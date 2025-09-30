@@ -272,6 +272,7 @@ const StudiesDetailTable: React.FC<StudyDetailsTableProps> = ({
           )}
         </DataTable>
         <PatientChartPagination
+          data-testid="pagination"
           pageNumber={currentPage}
           totalItems={studies.length}
           currentItems={results.length}

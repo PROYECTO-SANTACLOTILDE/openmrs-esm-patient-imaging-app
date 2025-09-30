@@ -27,6 +27,7 @@ jest.mock('@openmrs/esm-patient-common-lib', () => ({
       {headerTitle}: {displayText}
     </div>
   ),
+  CardHeader: ({ children }: any) => <div>{children}</div>,
   compare: jest.fn((a, b) => (a > b ? 1 : a < b ? -1 : 0)),
 }));
 
@@ -85,7 +86,7 @@ describe('StudiesDetailsTable', () => {
 
   it('shows pagination', () => {
     render(<StudiesDetailTable patientUuid="p-1" studies={mockStudies} />);
-    expect(screen.getByTestId(/pagination/i)).toHaveTextContent('Page 1');
+    expect(screen.getByTestId('pagination')).toHaveTextContent('Page 1');
   });
 
   it('calls showModal when delete button clicked', () => {

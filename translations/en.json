@@ -5,6 +5,10 @@
   "addProcedureStep": "Add new procedure step",
   "aetTitle": "AetTitle",
   "description": "Description",
+  "filterByPriority": "Filter by priority",
+  "filterByStatus": "Filter by status",
+  "filterByStudyDate": "Filter by study date",
+  "filterByStudyDescription": "Filter by study description",
   "imagePositionPatient": "Image position of Patient",
   "instanceNumber": "Instance number",
   "instances": "instances",
@@ -54,9 +58,5 @@
   "time": "Time",
   "upload": "Upload",
   "worklist": "Worklist",
-  "worklistNoFoundMessage": "No worklist found",
-  "filterByStatus": "Filter by status",
-  "filterByPriority": "Filter by priority",
-  "filterByStudyDate": "Filter by study date",
-  "filterByStudyDescription": "Filter by study description"
+  "worklistNoFoundMessage": "No worklist found"
 }
