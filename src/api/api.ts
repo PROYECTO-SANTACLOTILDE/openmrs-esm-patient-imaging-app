@@ -159,12 +159,29 @@ export function useRequestsByPatient(patientUuid: string) {
   };
 }
 
+export function useRequestProcedures(status: string) {
+  const procedureUrl = `${worklistUrl}/requests?status=${status}`;
+
+  const { data, error, isLoading, isValidating, mutate } = useSWR<FetchResponse<Array<RequestProcedure>>, Error>(
+    status ? procedureUrl : null,
+    openmrsFetch,
+    { refreshInterval: 3000 },
+  );
+  return {
+    data: data?.data,
+    error: error,
+    isLoading: isLoading,
+    isValidating: isValidating,
+    mutate: mutate,
+  };
+}
+
 /**
  *
  * @param requestId The UID of the requested procedure whose step should be fetched
  */
 export function useProcedureStep(requestId: number) {
-  const procedureStepUrl = `${worklistUrl}/requeststep?&requestId=${requestId}`;
+  const procedureStepUrl = `${worklistUrl}/requeststep?requestId=${requestId}`;
 
   const { data, error, isLoading, isValidating, mutate } = useSWR<FetchResponse<Array<RequestProcedureStep>>, Error>(
     procedureStepUrl,

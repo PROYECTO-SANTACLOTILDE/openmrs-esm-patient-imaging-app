@@ -11,6 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  SelectItem,
 } from '@carbon/react';
 import { CardHeader, compare, PatientChartPagination, EmptyState } from '@openmrs/esm-patient-common-lib';
 
@@ -45,8 +46,8 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
   const { t } = useTranslation();
   const displayText = t('requestProcedureEmptyState', 'No requests found');
   const headerTitle = t('requestProcedure', 'RequestProcedure');
-  const [statusFilter, setStatusFilter] = useState<string>('');
-  const [priorityFilter, setPriorityFilter] = useState<string>('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [priorityFilter, setPriorityFilter] = useState<string>('all');
   const [expandedRows, setExpandedRows] = useState({});
   const shouldOnClickBeCalled = useRef(true);
   const layout = useLayoutType();
@@ -61,13 +62,11 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
     });
   };
 
-  const filteredRequests = useMemo(() => {
-    return requests.filter((req) => {
-      const matchesStatus = statusFilter ? req.status.toLowerCase().includes(statusFilter.toLowerCase()) : true;
-      const matchesPriority = priorityFilter ? req.priority.toLowerCase().includes(priorityFilter.toLowerCase()) : true;
-      return matchesStatus && matchesPriority;
-    });
-  }, [requests, statusFilter, priorityFilter]);
+  const filteredRequests = requests.filter((item) => {
+    const statusMatch = statusFilter === 'all' || item.status.toLowerCase() === statusFilter;
+    const priorityMatch = priorityFilter === 'all' || item.priority.toLowerCase() === priorityFilter;
+    return statusMatch && priorityMatch;
+  });
 
   const { results, goTo, currentPage } = usePagination(filteredRequests, requestCount);
 
@@ -180,21 +179,31 @@ const RequestProcedureTable: React.FC<RequestProcedureTableProps> = ({ isValidat
             </Button>
           </div>
           <div className={styles.filterContainer}>
-            <input
+            <select
+              id="status-filter"
+              aria-label="status-filter"
               style={{ marginRight: '20px' }}
-              type="text"
-              placeholder={t('filterByStatus', 'Filter by status')}
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className={styles.filterInput}
-            />
-            <input
-              type="text"
-              placeholder={t('filterByPriority', 'Filter by priority')}
+            >
+              <SelectItem value="all" text={t('all', 'All')} />
+              <SelectItem value="completed" text={t('completed', 'completed')} />
+              <SelectItem value="progress" text={t('progress', 'progress')} />
+              <SelectItem value="scheduled" text={t('scheduled', 'scheduled')} />
+            </select>
+            <select
+              id="priority-filter"
+              aria-label="priority-filter"
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
               className={styles.filterInput}
-            />
+            >
+              <SelectItem value="all" text={t('all', 'All')} />
+              <SelectItem value="low" text={t('low', 'low')} />
+              <SelectItem value="medium" text={t('medium', 'medium')} />
+              <SelectItem value="high" text={t('high', 'high')} />
+            </select>
           </div>
         </CardHeader>
         <DataTable

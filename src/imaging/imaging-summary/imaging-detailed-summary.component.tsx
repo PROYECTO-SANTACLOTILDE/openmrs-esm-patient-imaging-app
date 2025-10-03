@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRequestsByPatient, useStudiesByPatient } from '../../api';
+import { useRequestProcedures, useRequestsByPatient, useStudiesByPatient } from '../../api';
 import { DataTableSkeleton } from '@carbon/react';
 import { CardHeader, EmptyState, ErrorState } from '@openmrs/esm-patient-common-lib';
 import { AddIcon, launchWorkspace, useLayoutType } from '@openmrs/esm-framework';
