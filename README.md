@@ -199,6 +199,47 @@ DICOM worklists from the Orthanc server (replace 127.0.0.1 by the IP address of 
   # f.write(responseDicom)
 ```
 
+## Testing the module
+
+### Run unit and integration tests:
+
+```bash
+npm run test
+```
+
+### Run end-to-end (E2E) tests:
+
+Before running end-to-end (E2E) tests, ensure that you have the following set up:
+> - **Orthanc Server** installed and running — ensure it contains **no image data**.
+> - **Imaging` backend server** is started.
+> - **OpenMRS3.x frontend** is running:  
+
+```bash
+npm start -- --backend http://localhost:YOUR-BACKEND-PORT/
+```
+> - **Orthanc configuration** is correctly added to your environment.
+
+This project provides the `start-e2e.sh` helper script to start the E2E test suite.
+
+**Run a single suite**
+
+```bash
+export E2E_BASE_URL=http://localhost:YOUR-BACKEND-PORT/openmrs
+./start-e2e.sh e2e/specs/imaging-detailed-summary.component.spec.ts
+```
+
+**Run E2E test suites**
+
+```bash
+export E2E_BASE_URL=http://localhost:YOUR-BACKEND-PORT/openmrs
+./start-e2a.sh
+```
+
+Clean up the previous test results and reports to avoid confusion or clutter:
+```bash
+rm -rf test-results/ playwright-report/
+```
+
 ## Docker Project for This Module
 The Docker setup for this module, including the microfrontend for OpenMRS 3.x, is available here: 
 https://github.com/sadrezhao/openmrs-imaging-docker

@@ -1841,15 +1841,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/ecma402-abstract@npm:2.3.4":
-  version: 2.3.4
-  resolution: "@formatjs/ecma402-abstract@npm:2.3.4"
+"@formatjs/ecma402-abstract@npm:2.3.5":
+  version: 2.3.5
+  resolution: "@formatjs/ecma402-abstract@npm:2.3.5"
   dependencies:
     "@formatjs/fast-memoize": "npm:2.2.7"
-    "@formatjs/intl-localematcher": "npm:0.6.1"
+    "@formatjs/intl-localematcher": "npm:0.6.2"
     decimal.js: "npm:^10.4.3"
     tslib: "npm:^2.8.0"
-  checksum: 10/573971ffc291096a4b9fcc80b4708124e89bf2e3ac50e0f78b41eb797e9aa1b842f4dc3665e4467a853c738386821769d9e40408a1d25bc73323a1f057a16cf2
+  checksum: 10/254651057170836237dc4f0fbb372157f97133c4dcee414007e0cdb5b589baf0546c2f6337d117b988ee0a4f0a4d8247780aaa9e96b410c568495f162c40dc50
   languageName: node
   linkType: hard
 
@@ -1862,44 +1862,44 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/icu-messageformat-parser@npm:2.11.2":
-  version: 2.11.2
-  resolution: "@formatjs/icu-messageformat-parser@npm:2.11.2"
+"@formatjs/icu-messageformat-parser@npm:2.11.3":
+  version: 2.11.3
+  resolution: "@formatjs/icu-messageformat-parser@npm:2.11.3"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.3.4"
-    "@formatjs/icu-skeleton-parser": "npm:1.8.14"
+    "@formatjs/ecma402-abstract": "npm:2.3.5"
+    "@formatjs/icu-skeleton-parser": "npm:1.8.15"
     tslib: "npm:^2.8.0"
-  checksum: 10/e919eb2a132ac1d54fb1a7e3a3254007649b55196d3818090df92a4268dcddf20cbdf863c06039fbbe7a35a8a3f17bdc172dade99d1f17c1d8a95dcec444c3e3
+  checksum: 10/339f5ff5ea7417e2db7f01bd41340f78fd5a8e56a66e723272d21ce7ab4b265dcb45748cdca76eac7137e2b5e6767986812b471e011b4602cf7afbc6da57fb98
   languageName: node
   linkType: hard
 
-"@formatjs/icu-skeleton-parser@npm:1.8.14":
-  version: 1.8.14
-  resolution: "@formatjs/icu-skeleton-parser@npm:1.8.14"
+"@formatjs/icu-skeleton-parser@npm:1.8.15":
+  version: 1.8.15
+  resolution: "@formatjs/icu-skeleton-parser@npm:1.8.15"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.3.4"
+    "@formatjs/ecma402-abstract": "npm:2.3.5"
     tslib: "npm:^2.8.0"
-  checksum: 10/2fbe3155c310358820b118d8c9844f314eff3500a82f1c65402434a3095823e1afeaab8d1762b4a59cc5679d82dc4c8c134683565d7cdae4daace23251f46a47
+  checksum: 10/19825abc1a5eef0288456c08420d06f3da8256fbe81db0b9ead48cacc94954d748c8068988e26d184d38fca2e50c191ecda5a10ff3935529c3134b8d80db0538
   languageName: node
   linkType: hard
 
 "@formatjs/intl-durationformat@npm:^0.7.3":
-  version: 0.7.4
-  resolution: "@formatjs/intl-durationformat@npm:0.7.4"
+  version: 0.7.5
+  resolution: "@formatjs/intl-durationformat@npm:0.7.5"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.3.4"
-    "@formatjs/intl-localematcher": "npm:0.6.1"
+    "@formatjs/ecma402-abstract": "npm:2.3.5"
+    "@formatjs/intl-localematcher": "npm:0.6.2"
     tslib: "npm:^2.8.0"
-  checksum: 10/d62273ecd635475ca91e9b501301f3f396403fa91b584c550734b19b2d194ba1316b27303fed985c1d42ae933d54eb220da6540edfdf376b0d9371ecfd0d4e15
+  checksum: 10/4dc81b112fed25dc8da0a16ddeff033b7c763bf9a1cfd7b1b25c1216f7f147eb67a47059a3cf95b4d4ade150c54a813542b84e69298905a4bc22548d74bf8567
   languageName: node
   linkType: hard
 
-"@formatjs/intl-localematcher@npm:0.6.1":
-  version: 0.6.1
-  resolution: "@formatjs/intl-localematcher@npm:0.6.1"
+"@formatjs/intl-localematcher@npm:0.6.2":
+  version: 0.6.2
+  resolution: "@formatjs/intl-localematcher@npm:0.6.2"
   dependencies:
     tslib: "npm:^2.8.0"
-  checksum: 10/c7b3bc8395d18670677f207b2fd107561fff5d6394a9b4273c29e0bea920300ec3a2eefead600ebb7761c04a770cada28f78ac059f84d00520bfb57a9db36998
+  checksum: 10/eb12a7f5367bbecdfafc20d7f005559ce840f420e970f425c5213d35e94e86dfe75bde03464971a26494bf8427d4961269db22ecad2834f2a19d888b5d9cc064
   languageName: node
   linkType: hard
 
@@ -3680,6 +3680,77 @@ __metadata:
   checksum: 10/31ae8a24636bbb1b2d18465a6236f8519b728c63c4b78013c18d7f07a0cc3155a55a5ad336f3c9434c5e2efb6fc2b2ef1c0eca34fbc36bc1ed01c4ba39e948b3
   languageName: node
   linkType: hard
+
+"@openmrs/esm-patient-imaging-app@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-patient-imaging-app@workspace:."
+  dependencies:
+    "@carbon/react": "npm:^1.90.0"
+    "@hookform/resolvers": "npm:^3.x"
+    "@internationalized/date": "npm:^3.x"
+    "@openmrs/esm-framework": "npm:^8.0.0"
+    "@openmrs/esm-patient-common-lib": "npm:^11.3.0"
+    "@openmrs/esm-styleguide": "npm:^8.0.0"
+    "@playwright/test": "npm:^1.55.0"
+    "@swc/cli": "npm:^0.3.12"
+    "@swc/core": "npm:^1.3.68"
+    "@swc/jest": "npm:^0.2.36"
+    "@testing-library/dom": "npm:^10.1.0"
+    "@testing-library/jest-dom": "npm:^6.4.5"
+    "@testing-library/react": "npm:^15.0.6"
+    "@testing-library/user-event": "npm:^14.5.2"
+    "@types/jest": "npm:^30.0.0"
+    "@types/react": "npm:^18.2.14"
+    "@types/react-dom": "npm:^18.2.6"
+    "@types/react-router": "npm:^5.1.20"
+    "@types/react-router-dom": "npm:^5.3.3"
+    "@types/webpack-env": "npm:^1.18.1"
+    "@typescript-eslint/eslint-plugin": "npm:^7.8.0"
+    "@typescript-eslint/parser": "npm:^7.8.0"
+    css-loader: "npm:^6.8.1"
+    dayjs: "npm:1.x"
+    dotenv: "npm:^16.0.3"
+    eslint: "npm:^8.57.0"
+    eslint-config-prettier: "npm:^8.8.0"
+    eslint-plugin-jest-dom: "npm:^5.4.0"
+    eslint-plugin-prettier: "npm:^5.1.3"
+    eslint-plugin-react-hooks: "npm:^4.6.2"
+    husky: "npm:^8.0.3"
+    i18next: "npm:^21.10.0"
+    i18next-parser: "npm:^9.0.2"
+    identity-obj-proxy: "npm:^3.0.0"
+    jest: "npm:^29.7.0"
+    jest-cli: "npm:^29.7.0"
+    jest-environment-jsdom: "npm:^29.7.0"
+    lint-staged: "npm:^15.2.2"
+    lodash-es: "npm:^4.17.21"
+    open: "npm:^8.4.0"
+    openmrs: "npm:^8.0.0"
+    prettier: "npm:^3.3.3"
+    react: "npm:^18.x"
+    react-dom: "npm:^18.x"
+    react-hook-form: "npm:^7.x"
+    react-i18next: "npm:^11.x"
+    react-is: "npm:^19.1.0"
+    react-router-dom: "npm:^7.x"
+    rxjs: "npm:^6.6.7"
+    sass: "npm:^1.54.3"
+    swc-loader: "npm:^0.2.3"
+    swr: "npm:^2.x"
+    ts-jest: "npm:^29.4.1"
+    ts-node: "npm:^10.9.2"
+    turbo: "npm:^2.5.4"
+    typescript: "npm:^5.6.3"
+    zod: "npm:^3.x"
+  peerDependencies:
+    "@openmrs/esm-framework": "*"
+    dayjs: 1.x
+    react: 18.x
+    react-i18next: 11.x
+    react-router-dom: 6.x
+    rxjs: 6.x
+  languageName: unknown
+  linkType: soft
 
 "@openmrs/esm-react-utils@npm:8.0.0":
   version: 8.0.0
@@ -7112,6 +7183,15 @@ __metadata:
   linkType: hard
 
 "@types/send@npm:*":
+  version: 1.2.0
+  resolution: "@types/send@npm:1.2.0"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10/11b4a178902deae8743e92a12ce0821200c285a75fade3b44ca5ee66f65997cd9ce86006622f0a1adaef8fa5272ac06bf464fab34089e36dca8e57197ff32544
+  languageName: node
+  linkType: hard
+
+"@types/send@npm:<1":
   version: 0.17.5
   resolution: "@types/send@npm:0.17.5"
   dependencies:
@@ -7131,13 +7211,13 @@ __metadata:
   linkType: hard
 
 "@types/serve-static@npm:*, @types/serve-static@npm:^1.15.5":
-  version: 1.15.8
-  resolution: "@types/serve-static@npm:1.15.8"
+  version: 1.15.9
+  resolution: "@types/serve-static@npm:1.15.9"
   dependencies:
     "@types/http-errors": "npm:*"
     "@types/node": "npm:*"
-    "@types/send": "npm:*"
-  checksum: 10/c031f870df6056a4c0a5a0ae94c5584006ab55400c74ae44de4d68d89338fbe982422861bad478b89a073f671efca454689fd28b6147358d6adc8edbc599caea
+    "@types/send": "npm:<1"
+  checksum: 10/5b7a24c1e5fb474ae539165451dae4e3e85e104d9935562de9c5f0c6b2557395aefe6fdbaf094178ea94d58fd9f26e9605a51ccaf101655fcda18971840c06ad
   languageName: node
   linkType: hard
 
@@ -7584,77 +7664,6 @@ __metadata:
   checksum: 10/7217bae9fe240e0d804969e7b2af11cb04ec608837c78b56ca88831991b287e232a0b7fce8d548beaff42aaf0197ffa471d81be6ac4c4e53b0148025a2c076ec
   languageName: node
   linkType: hard
-
-"@zhaosadre/esm-patient-imaging-app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@zhaosadre/esm-patient-imaging-app@workspace:."
-  dependencies:
-    "@carbon/react": "npm:^1.90.0"
-    "@hookform/resolvers": "npm:^3.x"
-    "@internationalized/date": "npm:^3.x"
-    "@openmrs/esm-framework": "npm:^8.0.0"
-    "@openmrs/esm-patient-common-lib": "npm:^11.3.0"
-    "@openmrs/esm-styleguide": "npm:^8.0.0"
-    "@playwright/test": "npm:^1.55.0"
-    "@swc/cli": "npm:^0.3.12"
-    "@swc/core": "npm:^1.3.68"
-    "@swc/jest": "npm:^0.2.36"
-    "@testing-library/dom": "npm:^10.1.0"
-    "@testing-library/jest-dom": "npm:^6.4.5"
-    "@testing-library/react": "npm:^15.0.6"
-    "@testing-library/user-event": "npm:^14.5.2"
-    "@types/jest": "npm:^30.0.0"
-    "@types/react": "npm:^18.2.14"
-    "@types/react-dom": "npm:^18.2.6"
-    "@types/react-router": "npm:^5.1.20"
-    "@types/react-router-dom": "npm:^5.3.3"
-    "@types/webpack-env": "npm:^1.18.1"
-    "@typescript-eslint/eslint-plugin": "npm:^7.8.0"
-    "@typescript-eslint/parser": "npm:^7.8.0"
-    css-loader: "npm:^6.8.1"
-    dayjs: "npm:1.x"
-    dotenv: "npm:^16.0.3"
-    eslint: "npm:^8.57.0"
-    eslint-config-prettier: "npm:^8.8.0"
-    eslint-plugin-jest-dom: "npm:^5.4.0"
-    eslint-plugin-prettier: "npm:^5.1.3"
-    eslint-plugin-react-hooks: "npm:^4.6.2"
-    husky: "npm:^8.0.3"
-    i18next: "npm:^21.10.0"
-    i18next-parser: "npm:^9.0.2"
-    identity-obj-proxy: "npm:^3.0.0"
-    jest: "npm:^29.7.0"
-    jest-cli: "npm:^29.7.0"
-    jest-environment-jsdom: "npm:^29.7.0"
-    lint-staged: "npm:^15.2.2"
-    lodash-es: "npm:^4.17.21"
-    open: "npm:^8.4.0"
-    openmrs: "npm:^8.0.0"
-    prettier: "npm:^3.3.3"
-    react: "npm:^18.x"
-    react-dom: "npm:^18.x"
-    react-hook-form: "npm:^7.x"
-    react-i18next: "npm:^11.x"
-    react-is: "npm:^19.1.0"
-    react-router-dom: "npm:^7.x"
-    rxjs: "npm:^6.6.7"
-    sass: "npm:^1.54.3"
-    swc-loader: "npm:^0.2.3"
-    swr: "npm:^2.x"
-    ts-jest: "npm:^29.4.1"
-    ts-node: "npm:^10.9.2"
-    turbo: "npm:^2.5.4"
-    typescript: "npm:^5.6.3"
-    zod: "npm:^3.x"
-  peerDependencies:
-    "@openmrs/esm-framework": "*"
-    dayjs: 1.x
-    react: 18.x
-    react-i18next: 11.x
-    react-router-dom: 6.x
-    rxjs: 6.x
-  languageName: unknown
-  linkType: soft
 
 "abab@npm:^2.0.6":
   version: 2.0.6
@@ -10619,11 +10628,11 @@ __metadata:
   linkType: hard
 
 "envinfo@npm:^7.14.0":
-  version: 7.15.0
-  resolution: "envinfo@npm:7.15.0"
+  version: 7.16.0
+  resolution: "envinfo@npm:7.16.0"
   bin:
     envinfo: dist/cli.js
-  checksum: 10/6e8bdea0965418a552eeb3d2505edbe7c4870946e30f18f1fd4627108dc23961a21506f53342a9eb58d97b510d046237701d1cd2311c73881f3c081c4fcc1658
+  checksum: 10/883700689545330cd41a873b91770b14a3399d26fd29594ca8dfb8a5ed1a37d16d459b79f390e74c71c5c537c4ac8f94dc169ccc49168bd358d90cc789ab2bad
   languageName: node
   linkType: hard
 
@@ -12969,14 +12978,14 @@ __metadata:
   linkType: hard
 
 "intl-messageformat@npm:^10.1.0":
-  version: 10.7.16
-  resolution: "intl-messageformat@npm:10.7.16"
+  version: 10.7.17
+  resolution: "intl-messageformat@npm:10.7.17"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.3.4"
+    "@formatjs/ecma402-abstract": "npm:2.3.5"
     "@formatjs/fast-memoize": "npm:2.2.7"
-    "@formatjs/icu-messageformat-parser": "npm:2.11.2"
+    "@formatjs/icu-messageformat-parser": "npm:2.11.3"
     tslib: "npm:^2.8.0"
-  checksum: 10/c19b77c5e495ce8b0d1aa0d95444bf3a4f73886805f1e08d7159b364abcf2f63686b2ccf202eaafb0e39a0e9fde61848b8dd2db1679efd4f6ec8f6a3d0e77928
+  checksum: 10/4f8c30c998bfc14eb64894414b94a8923045ab31d7bbf0978dab6621c644d451ff5c533c04ce8128163b74dd6d59061ec1ef3acb1cbab3302d31cbdb21947620
   languageName: node
   linkType: hard
 
@@ -15405,9 +15414,9 @@ __metadata:
   linkType: hard
 
 "node-releases@npm:^2.0.21":
-  version: 2.0.21
-  resolution: "node-releases@npm:2.0.21"
-  checksum: 10/5344d634b39d20f47c0d85a1c64567fdb9cf46f7b27ed3d141f752642faab47dae326835c2109636f823758afb16ffbed7b0c0fe6f800ef91cec9f2beb4f2b4a
+  version: 2.0.23
+  resolution: "node-releases@npm:2.0.23"
+  checksum: 10/f937b23e279b791bc7842d71536e8520ea12efa2c307e5803227ecbba1c807a932bbe3c26d6a8c0e12e21cb3f9c6a6d4ed14beee489ff9e9be49f6d4cf0c7aa4
   languageName: node
   linkType: hard
 
@@ -17153,11 +17162,11 @@ __metadata:
   linkType: hard
 
 "react-hook-form@npm:^7.x":
-  version: 7.63.0
-  resolution: "react-hook-form@npm:7.63.0"
+  version: 7.64.0
+  resolution: "react-hook-form@npm:7.64.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10/df07de6fce42bbcd65ed100aaea7d0e907c555c2635c253517225c84f06eab0ebd278578ada4f479ad582c18a52898c4f1cabca327a12a74b8b7e6e54718edbe
+  checksum: 10/f50041a51c4fd4a70e504de64c01c1fb97b4aacd877079fc7e8521fa5d9da7024082e3afa3c427d9c25bfde7e07b313ebdee2adc79ba80db8a56dae424e05818
   languageName: node
   linkType: hard
 

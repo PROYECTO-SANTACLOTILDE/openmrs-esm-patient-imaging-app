@@ -1,9 +1,5 @@
 import { expect } from '@playwright/test';
-import { DicomStudy, RequestProcedure } from '../commands/types';
 import { test } from '../core';
-import { cleanOrthanc } from '../commands/imaging-operations';
-import { timeout } from 'rxjs/operators';
-
 let patientUuid: string;
 
 test.beforeEach(async ({ api, patient, request }) => {
@@ -68,30 +64,38 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
     await page.goto(`${process.env.E2E_BASE_URL}/spa/patient/${patientUuid}/chart/Imaging#`);
 
     // Click the "Upload" button in ImagingDetailedSummary
-    await page.getByRole('button', { name: /Upload/i }).click();
+    const uploadButton = page.getByRole('button', { name: /upload/i });
+    await uploadButton.click();
+
+    // wait for upload studies workspace to open
+    const uploadWorkspace = page.locator('#uploadStudies');
+    await uploadWorkspace.waitFor({ state: 'visible', timeout: 40000 });
 
     // Assert workspace form is visible
-    await expect(page.locator('#uploadStudies')).toBeVisible();
+    await expect(uploadWorkspace).toBeVisible();
 
-    // Check for Orthanc Config group
-    await expect(page.getByRole('group', { name: /Orthanc configurations/i })).toBeVisible();
+    // check for Orthanc configuration
+    const orthancGroup = page.getByRole('group', { name: /Orthanc configurations/i });
+    await expect(orthancGroup).toBeVisible();
 
     // Check for ComboBox
-    await expect(page.getByPlaceholder(/Select an Orthanc server/i)).toBeVisible();
-
     const comboBox = page.getByTestId('orthanc-server-combobox');
+    await expect(comboBox).toBeVisible();
+    await expect(comboBox).toBeEnabled();
     await comboBox.click();
 
-    // Check for FileUploader
-    await expect(page.getByTestId('upload-studies-fileuploader')).toBeVisible();
+    // Check for FileUpload
+    const fileuploader = page.getByTestId('upload-studies-fileuploader');
+    await expect(fileuploader).toBeVisible();
 
-    const uploadButton = page.getByTestId('upload-studies-submit');
+    // Check for upload and Cancel buttons
+    const uploadSubmit = page.getByTestId('upload-studies-submit');
     const cancelButton = page.getByTestId('upload-studies-cancel');
 
-    await expect(uploadButton).toBeVisible();
+    await expect(uploadSubmit).toBeVisible();
     await expect(cancelButton).toBeVisible();
 
-    await uploadButton.click();
+    await uploadSubmit.click();
   });
 
   test('should display worklist or empty state', async ({ page }) => {
@@ -139,8 +143,10 @@ test.describe.serial('ImagingDetailedSummary E2E', () => {
     // Open the "Add Request" workspace
     const worklistBtn = page.getByRole('button', { name: /Record No worklist found/i });
     await worklistBtn.click();
+
     const form = page.locator('#newRequestForm');
-    await expect(form).toBeVisible({ timeout: 10000 });
+    await form.waitFor({ state: 'visible', timeout: 20000 });
+    await expect(form).toBeVisible();
 
     await page.getByRole('button', { name: /Save and close/i }).click();
 
