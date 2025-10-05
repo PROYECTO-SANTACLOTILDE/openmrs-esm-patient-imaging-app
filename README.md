@@ -14,7 +14,7 @@ Watch the demo video of the module for OpenMRS 2.x here: [Watch the video](https
 
 Watch the demo video of the module for OpenMRS 3.x here: [Watch the video](https://youtu.be/Z4MRPmkwHms)
 
-## Repo Links
+## Repo links
 
 - Backend Module: https://github.com/sadrezhao/openmrs-module-imaging
 - Frontend App: https://github.com/openmrs/openmrs-esm-patient-imaging-app
@@ -60,7 +60,7 @@ findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" XXXX 4242
 ```
 
 
-## Supported Versions
+## Supported versions
 
 - **OpenMRS 3.x**: Modern React-based frontend ("micro frontend app")
 - **OpenMRS 2.x**: Legacy backend with module UI (with gsp pages)
@@ -93,13 +93,14 @@ The current implementation of the backend module supports OpenMRS 2.x and OpenMR
 
 
 - Download the imaging backend module from GitHub: https://github.com/sadrezhao/openmrs-module-imaging/releases
+
 - Deploy the module:
     Download the module from https://github.com/sadrezhao/openmrs-module-imaging/releases, and manually copy the omod file to the module directory of your OpenMRS backend server or upload it using `Manage Modules` configuration page.
     The activation of the module can take some time. If deployed successfully, it should appear in the list of loaded modules on your server: ![The imaging module](./src/assets/imagingModule.png)
 
 - Developers can deploy the module in their SDK server with maven:
     ```bash
-        mvn clean install openmrs-sdk:run -DserverId=myserver
+    mvn clean install openmrs-sdk:run -DserverId=myserver
     ```
 
 ### (Only for OpenMRS 3.x) OpenMRS micro frontend app 
@@ -109,26 +110,52 @@ We will not describe here how to create a new OpenMRS distribution for productio
 - Running the frontend app locally:
 
     ```bash
-        git clone https://github.com/openmrs/openmrs-esm-patient-imaging-app.git
+    git clone https://github.com/openmrs/openmrs-esm-patient-imaging-app.git
 
-        cd openmrs-esm-patient-imaging-app
-        
-        yarn # Install frontend dependences
+    cd openmrs-esm-patient-imaging-app
+    
+    yarn install # Install frontend dependences
 
-        # Start frontend
-        npm start -- --backend http://OPENMRSHOST:OPENMRSPORT/
-
+    # Start frontend
+    npm start -- --backend http://OPENMRSHOST:OPENMRSPORT/
     ```
     Replace OPENMRSHOST and OPENMRSPORT with your backend address and port.
 
-- Deploying the frontend app in an existing OpenMRS 3 server for testing: 
-    1. Copy the directory `dist` from the package 'openmrs-esm-patient-imaging-app' to the directory `your-openmrs3-server/frontend/`, then rename the `dist` folder to `openmrs-esm-patient-imaging-app-1.0.1-pre.1`
-    1. Add the following entry to the file `your-openmrs3-server/frontend/importmap.json`:
-        ```bash
-        @openmrs/esm-patient-imaging-app":"./openmrs-esm-patient-imaging-app-1.0.1-pre.1/openmrs-esm-patient-imaging-app.js
-        ```
-    1. Create a new top-level key named `@openmrs/esm-patient-imaging-app` in the file `your-openmrs3-server/frontend/routes.registry.json`. For the value of the key, copy the entire content of the file `route.json` that is located in `openmrs-esm-patient-imaging-app-1.0.1-pre.1`
-    1. Restart the OpenMRS server
+- Deploying the frontend app in an existing OpenMRS 3.x server for testing:
+
+1. In your cloned project folder, open the package.json file and update the name field to:
+    ```json
+    "name": "@openmrs/esm-patient-imaging-app"
+    ```
+1. Edit the file `/src/index.ts` and replace the module name constant with:
+    ```typescript
+    const moduleName = '@openmrs/esm-patient-imaging-app'
+    ```
+1. Reinstall dependencies:
+    ```bash
+    yarn install
+    ```
+1. Build the new version of the module:
+    ```bash
+    npm run build
+    ```
+1. Copy the directory `dist` from the package 'openmrs-esm-patient-imaging-app' to the directory `your-openmrs3-server/frontend/`, then rename the `dist` folder to `openmrs-esm-patient-imaging-app-1.0.1-pre.1`
+1. Add the following entry to the file `your-openmrs3-server/frontend/importmap.json`:
+    ```bash
+    @openmrs/esm-patient-imaging-app":"./openmrs-esm-patient-imaging-app-1.0.1-pre.1/openmrs-esm-patient-imaging-app.js
+    ```
+1. Create a new top-level key named `@openmrs/esm-patient-imaging-app` in the file `your-openmrs3-server/frontend/routes.registry.json`. For the value of the key, copy the entire content of the file `route.json` that is located in `openmrs-esm-patient-imaging-app-1.0.1-pre.1`
+
+1. Restart the OpenMRS server
+
+
+## Docker project for this module
+
+The Docker setup for this module, including the microfrontend for OpenMRS 3.x, is available here: 
+- Link: https://github.com/sadrezhao/openmrs-imaging-docker
+
+> **note** To deploy a new version of the microfrontend application to Docker Compose project, follow steps 1-4 in the `Deploying the frontend app in an existing OpenMRS 3.x server for testing` section. Update the module name before building.
+
 
 ## Configuring Orthanc
 
@@ -137,10 +164,10 @@ We will not describe here how to create a new OpenMRS distribution for productio
 The imaging backend module provides an REST API service that the Orthanc servers needs to contact to query and update the worklist. Add the following lines to the configuration file of the Orthanc servers (typically the file `/etc/orthanc/orthanc.json`):
 
 ```bash
-    "ImagingWorklistURL": "http://OPENMRSHOST:OPENMRSPORT/openmrs/ws/rest/v1/worklist/requests",   
-    "ImagingUpdateRequestStatus": "http://OPENMRSHOST:OPENMRSPORT/openmrs/ws/rest/v1/worklist/updaterequeststatus",`
-    "ImagingWorklistUsername" : "OPENMRSHOSTUSER",`  
-    "ImagingWorklistPassword" : "OPENMRSHOSTPASSWORD"`
+"ImagingWorklistURL": "http://OPENMRSHOST:OPENMRSPORT/openmrs/ws/rest/v1/worklist/requests",   
+"ImagingUpdateRequestStatus": "http://OPENMRSHOST:OPENMRSPORT/openmrs/ws/rest/v1/worklist/updaterequeststatus",`
+"ImagingWorklistUsername" : "OPENMRSHOSTUSER",`  
+"ImagingWorklistPassword" : "OPENMRSHOSTPASSWORD"`
 ```
 
 Replace OPENMRSHOST and OPENMRSPORT by the address and port of your OpenMRS backend server, and OPENMRSHOSTUSER and OPENMRSHOSTPASSWORD by the name and password of an user account on the OpenMRS server that Orthanc can use to access the API.
@@ -171,7 +198,7 @@ The Orthanc servers act as worklist servers for the modalities. Our python plugi
 Make sure that the OpenMRS account used by Orthanc has the correct permissions and is restricted to the necessary imaging and worklist APIs only.
 
 
-## Testing the Worklist
+## Testing the worklist
 
 - Create Imaging Requests:
 Use the frontend UI to create one or more imaging procedure requests for a patient.
@@ -180,15 +207,13 @@ Use the frontend UI to create one or more imaging procedure requests for a patie
 First, create some new imaging requests in the front end. The DCMTK findscu tool from https://support.dcmtk.org/docs/findscu.html allows to query the resulting 
 DICOM worklists from the Orthanc server (replace 127.0.0.1 by the IP address of the Orthanc server):
 
-```bash
-  
-  findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" 127.0.0.1 4242     # Query by modality 
+    ```bash
+    findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" 127.0.0.1 4242     # Query by modality 
 
-  findscu -v -W -k "PatientID=PatientUuid" 127.0.0.1 4242  # Query by patient data
+    findscu -v -W -k "PatientID=PatientUuid" 127.0.0.1 4242  # Query by patient data
 
-  findscu -v -W -k "ScheduledProcedureStepSequence[0].RequestedProcedureDescription=xxx" 127.0.0.1 4242 # Query by requested procedure description
-
-```
+    findscu -v -W -k "ScheduledProcedureStepSequence[0].RequestedProcedureDescription=xxx" 127.0.0.1 4242 # Query by requested procedure description
+    ```
 - (Optional) Generate `.wl` File for Debugging: Uncomment the following lines in orthancWorklist.py and restart Orthanc:
 
 ``` bash
@@ -238,10 +263,6 @@ Clean up the previous test results and reports to avoid confusion or clutter:
 ```bash
 rm -rf test-results/ playwright-report/
 ```
-
-## Docker Project for This Module
-The Docker setup for this module, including the microfrontend for OpenMRS 3.x, is available here: 
-- Link: https://github.com/sadrezhao/openmrs-imaging-docker
 
 
 
