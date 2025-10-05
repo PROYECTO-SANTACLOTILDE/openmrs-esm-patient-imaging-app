@@ -60,7 +60,6 @@ findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" XXXX 4242
 ```
 
 
-
 ## Supported Versions
 
 - **OpenMRS 3.x**: Modern React-based frontend ("micro frontend app")
@@ -242,7 +241,7 @@ rm -rf test-results/ playwright-report/
 
 ## Docker Project for This Module
 The Docker setup for this module, including the microfrontend for OpenMRS 3.x, is available here: 
-https://github.com/sadrezhao/openmrs-imaging-docker
+- Link: https://github.com/sadrezhao/openmrs-imaging-docker
 
 
 
