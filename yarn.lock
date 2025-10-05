@@ -8871,9 +8871,9 @@ __metadata:
   linkType: hard
 
 "ci-info@npm:^4.2.0":
-  version: 4.3.0
-  resolution: "ci-info@npm:4.3.0"
-  checksum: 10/01e359032a34782fa2503530dd350c3ffaecede7d9ea0b120efa2ddda4c8dc80d8c2566caf1ea2287c739fad2bf277c65f70063a21f31f66203b889039c70eea
+  version: 4.3.1
+  resolution: "ci-info@npm:4.3.1"
+  checksum: 10/9dc952bef67e665ccde2e7a552d42d5d095529d21829ece060a00925ede2dfa136160c70ef2471ea6ed6c9b133218b47c007f56955c0f1734a2e57f240aa7445
   languageName: node
   linkType: hard
 
@@ -10628,11 +10628,11 @@ __metadata:
   linkType: hard
 
 "envinfo@npm:^7.14.0":
-  version: 7.16.0
-  resolution: "envinfo@npm:7.16.0"
+  version: 7.16.1
+  resolution: "envinfo@npm:7.16.1"
   bin:
     envinfo: dist/cli.js
-  checksum: 10/883700689545330cd41a873b91770b14a3399d26fd29594ca8dfb8a5ed1a37d16d459b79f390e74c71c5c537c4ac8f94dc169ccc49168bd358d90cc789ab2bad
+  checksum: 10/7bed0d48ebf6c6da7a49d4427a623bced0f1ec5cc50b39083178cadb427501a136ef238f2e6867873f6dc13367dac5cb0f0cd5d210b4ccba0b96b1eed2fd46aa
   languageName: node
   linkType: hard
 
