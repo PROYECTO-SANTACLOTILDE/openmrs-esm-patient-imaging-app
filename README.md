@@ -17,8 +17,8 @@ Watch the demo video of the module for OpenMRS 3.x here: [Watch the video](https
 ## Repo links
 
 - Backend Module: https://github.com/sadrezhao/openmrs-module-imaging
-- Frontend App: https://github.com/openmrs/openmrs-esm-patient-imaging-app
-- Orthanc Worklist Plugin: https://github.com/sadrezhao/openmrs-module-imaging/blob/main/python/orthancWorklist.py
+- Frontend App: https://github.com/sadrezhao/openmrs-esm-patient-imaging-app
+- Orthanc Worklist Plugin: https://github.com/sadrezhao/openmrs-module-imaging/blob/main/orthanc-plugin/orthancWorklist.py
 
 ## Features
 
