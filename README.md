@@ -47,7 +47,7 @@ corresponding studies. In addition, image data can be uploaded directly from the
 The Orthanc server will notify the OpenMRS server and the status of the procedure step will change in the frontend.
 
 
-### Worklist without RIS
+### Orthanc-Supported DICOM Worklist
 In the context of radiology, a worklist is a list of imaging studies or tasks that a radiologist needs to execute, review, or analyze.
 These tasks are typically retrieved from a radiology information system (RIS), a specialized database that manages patient and imaging information.
 However, in situations where an RIS system is not available or feasible (such as for smaller healthcare facilities, clinics, or specific locations),
