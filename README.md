@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/openmrs-orthanc.svg?branch=main)](https://travis-ci.org/openmrs-orthanc)
 
 OpenMRS Orthanc
 ===============
