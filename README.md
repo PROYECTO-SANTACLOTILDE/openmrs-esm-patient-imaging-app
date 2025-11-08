@@ -192,6 +192,9 @@ DICOM worklists from the Orthanc server (replace 127.0.0.1 by the IP address of 
 # Query by modality 
 findscu -v -W -k "ScheduledProcedureStepSequence[0].Modality=CT" 127.0.0.1 4242
 
+# Query by patient name
+findscu -v -W -k "PatientName=XXXX" 127.0.0.1 4242
+
 # Query by patient data
 findscu -v -W -k "PatientID=PatientUuid" 127.0.0.1 4242
 
