@@ -1,6 +1,6 @@
 {
-  "name": "@openmrs/esm-patient-imaging-app",
-  "version": "1.0.6",
+  "name": "@pucp-gidis-hiisc/esm-patient-imaging-app",
+  "version": "1.0.0-alpha",
   "license": "MPL-2.0",
   "description": "Patient imaging microfrontend for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-patient-imaging-app.js",
@@ -110,7 +110,12 @@
     "swr": "^2.x",
     "ts-node": "^10.9.2",
     "turbo": "^2.5.4",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "webpack": "5.102.0",
+    "webpack-cli": "^6.0.1"
+  },
+  "resolutions": {
+    "webpack": "5.102.0"
   },
   "lint-staged": {
     "packages/**/src/**/*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
